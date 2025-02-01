@@ -80,7 +80,7 @@ const UserSignup = () => {
             placeholder='Password'
             className='rounded w-full bg-[#eeeeee] mb-7 px-4 py-2 text-lg placeholder:text-base '
           />
-          <button className='bg-black text-white font-semibold mb-2 px-4 py-2 w-full text-lg placeholder:text-base rounded'>SignUp</button>
+          <button className='bg-black text-white font-semibold mb-2 px-4 py-2 w-full text-lg placeholder:text-base rounded'>Create Account</button>
           <p className='text-[10px] text-gray-500 m-2 leading-tight'>By proceeding, you consent to get calls, WhatsApp or SMS messages, including by automated means, from Uber and its affiliates to the number provided.</p>
 
           <p className='text-center'>Already have an Account! <Link to='/login' className='text-blue-600'>Login Here</Link></p>
