@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import UserContext from '../context/UserContext'
+import { UserContextData } from '../context/UserContext'
 
 const UserSignup = () => {
   const [email, setEmail] = useState('')
@@ -7,21 +10,46 @@ const UserSignup = () => {
   const [userData, setUserData] = useState({})
   const [firstName,setFirstName]=useState('')
   const [lastName,setLastName]=useState('')
+
+  //navigation 
+
+  const navigate=useNavigate();
+
+  //Context API
+  const context= useContext(UserContextData)
+
+  if (!context) {
+    throw new Error('UserContext must be used within a UserProvider');
+  }
+
+  const {user,setUser}=context;
   
   useEffect(()=>{
     console.log(userData)
   },[userData])
 
-  const submitHandler=(e:React.FormEvent<HTMLFormElement>)=>{
+  const submitHandler=async  (e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
-    setUserData({
+    const newUser={
       fullName:{
         firstName:firstName,
         lastName:lastName,
       },
       email:email,
       password:password
-    })
+    }
+
+    const response =await axios.post(`${import.meta.env.VITE_BASE_URL_FOR_BACKEND}/users/register`,newUser)
+
+    if(response.status===201){
+      const data=response.data
+      setUser(data.user)
+      localStorage.setItem('token',data.token)
+      if(localStorage.getItem('token')){
+        navigate('/home')
+      }
+    }
+    
     setFirstName('')
     setLastName('')
     setPassword('')

@@ -9,8 +9,21 @@ interface UserContextProps{
     children:ReactNode
 }
 
+interface User{
+    email:string,
+    fullName:{
+        firstName:string,
+        lastName:string
+    }
+}
+
+interface UserContextType {
+    user: User;
+    setUser: React.Dispatch<React.SetStateAction<User>>;
+}
+
 // Now lets make the context
-export const UserContextData= createContext({})
+export const UserContextData= createContext<UserContextType | undefined>(undefined)
 
 const UserContext:React.FC<UserContextProps> = ({children}) => {
     const [user,setUser]=useState({
@@ -22,7 +35,7 @@ const UserContext:React.FC<UserContextProps> = ({children}) => {
     })
 
     return (
-        <UserContextData.Provider value={[user,setUser]}>
+        <UserContextData.Provider value={{user,setUser}}>
             {children}
         </UserContextData.Provider>
     )
