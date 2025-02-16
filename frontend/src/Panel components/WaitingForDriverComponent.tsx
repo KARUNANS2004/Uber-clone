@@ -1,15 +1,15 @@
 import React from 'react'
 
-const WaitingForDriver = () => {
+interface WaitingForDriverComponentProps {
+  setWaitingForDriver: React.Dispatch<React.SetStateAction<boolean>>,
+  setlookingForDriverPanel: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const WaitingForDriverComponent = (props: WaitingForDriverComponentProps) => {
   return (
     <div className='flex flex-col' >
       <div className="px-3 flex flex-row-reverse justify-between text-2xl font-semibold">
-        <i
-          onClick={() => {
-            props.setlookingForDriverPanel(false);
-          }}
-          className="ri-arrow-down-wide-line text-gray-400 cursor-pointer pr-2 "
-        ></i>
+        <i className="ri-arrow-down-wide-line text-gray-400 cursor-pointer pr-2 " ></i>
       </div>
       <div className='flex justify-between items-center'>
         <img
@@ -56,4 +56,4 @@ const WaitingForDriver = () => {
   )
 }
 
-export default WaitingForDriver
+export default WaitingForDriverComponent
