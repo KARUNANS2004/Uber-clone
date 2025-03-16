@@ -410,3 +410,126 @@ This endpoint is used to log out an authenticated captain. It clears the authent
 ### Notes:
 
 - Ensure that the `Authorization` header contains the token when making the request.
+
+# Ride Creation Endpoint Documentation
+
+## Endpoint: `/rides/create`
+
+### Method: POST
+
+### Description:
+
+This endpoint is used to create a new ride. It validates the input data, creates a new ride, and returns the ride details.
+
+### Request Body:
+
+The request body should be a JSON object with the following fields:
+
+- `pickup`: A string with at least 3 characters (required)
+- `destination`: A string with at least 3 characters (required)
+- `vehicleType`: A string that must be one of `auto`, `car`, or `motorcycle` (required)
+
+### Example Request Body:
+
+```json
+{
+  "pickup": "563/11-A, Kaikondrahalli, Bengaluru Karnataka",
+  "destination": "Third Wave Coffee, 17th Cross Rd, PWD Quarters, 1st Sector, HSR Layout, Bengaluru, Karnataka",
+  "vehicleType": "car"
+}
+```
+
+### Responses:
+
+#### Success (201):
+
+- **Description**: Ride created successfully.
+- **Body**:
+  ```json
+  {
+    "ride": {
+      "_id": "ride-id",
+      "user": "user-id",
+      "pickup": "563/11-A, Kaikondrahalli, Bengaluru Karnataka",
+      "destination": "Third Wave Coffee, 17th Cross Rd, PWD Quarters, 1st Sector, HSR Layout, Bengaluru, Karnataka",
+      "vehicleType": "car",
+      "fare": "fare-amount",
+      "otp": "otp-code"
+    }
+  }
+  ```
+
+#### Client Error (400):
+
+- **Description**: Validation error.
+- **Body**:
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message",
+        "param": "field",
+        "location": "body"
+      }
+    ]
+  }
+  ```
+
+### Notes:
+
+- Ensure that the `Content-Type` header is set to `application/json` when making the request.
+
+# Ride Fare Calculation Endpoint Documentation
+
+## Endpoint: `/rides/get-fare`
+
+### Method: GET
+
+### Description:
+
+This endpoint is used to calculate the fare for a ride based on the pickup and destination locations.
+
+### Query Parameters:
+
+- `pickup`: A string with at least 3 characters (required)
+- `destination`: A string with at least 3 characters (required)
+
+### Example Request:
+
+```
+GET /rides/get-fare?pickup=563/11-A, Kaikondrahalli, Bengaluru Karnataka&destination=Third Wave Coffee, 17th Cross Rd, PWD Quarters, 1st Sector, HSR Layout, Bengaluru, Karnataka
+```
+
+### Responses:
+
+#### Success (200):
+
+- **Description**: Fare calculated successfully.
+- **Body**:
+  ```json
+  {
+    "auto": "fare-amount",
+    "car": "fare-amount",
+    "motorcycle": "fare-amount"
+  }
+  ```
+
+#### Client Error (400):
+
+- **Description**: Validation error.
+- **Body**:
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message",
+        "param": "field",
+        "location": "query"
+      }
+    ]
+  }
+  ```
+
+### Notes:
+
+- Ensure that the `Authorization` header contains the token when making the request.

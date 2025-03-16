@@ -3,6 +3,11 @@ import React from "react";
 interface VehiclePanelProps {
   setVehiclePanel: React.Dispatch<React.SetStateAction<boolean>>
   setconfirmRidePanel: React.Dispatch<React.SetStateAction<boolean>>
+  fare: {
+    auto: number,
+    car: number,
+    motorcycle: number
+  }
 }
 
 const VehiclePanel = (props: VehiclePanelProps) => {
@@ -40,7 +45,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
             Affordable, compact rides
           </p>
         </div>
-        <h2 className="text-xl font-semibold">₹193.20</h2>
+        <h2 className="text-xl font-semibold">₹{props.fare.car}</h2>
       </div>
       <div onClick={() => {
         props.setconfirmRidePanel(true)
@@ -63,7 +68,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
             Affordable motorcycle rides
           </p>
         </div>
-        <h2 className="text-xl font-semibold">₹65.17</h2>
+        <h2 className="text-xl font-semibold">{props.fare.motorcycle}</h2>
       </div>
       <div onClick={() => {
         props.setconfirmRidePanel(true)
@@ -84,7 +89,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
           <h5 className="font-medium text-sm">2 mins away</h5>
           <p className="font-normal text-xs text-gray-600">Affordable autos</p>
         </div>
-        <h2 className="text-xl font-semibold">₹118.21</h2>
+        <h2 className="text-xl font-semibold">₹{props.fare.auto}</h2>
       </div>
     </div>
   );
