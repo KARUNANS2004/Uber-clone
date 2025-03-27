@@ -23,6 +23,7 @@ const Home = () => {
   const [activeField, setActiveField] = useState<string | null>(null)
 
   const [fare, setFare] = useState<{ auto: number, car: number, motorcycle: number }>({ auto: 0, car: 0, motorcycle: 0 })
+  const [vehicleType, setVehicleType] = useState<"auto" | "car" | "motorcycle">("auto")
 
   // useref -- usedd with GSAP 
   const panelRef = useRef(null)
@@ -164,6 +165,20 @@ const Home = () => {
 
   }
 
+  async function createRide() {
+    const res = await axios.post(`http://localhost:4000/rides/create`, {
+      pickup,
+      destination,
+      vehicleType
+    }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+
+    console.log(res)
+  }
+
   return (
     <div className='relative h-screen overflow-hidden'>
       <img className='w-12 absolute left-5 top-5' src="https://pngimg.com/d/uber_PNG24.png" />
@@ -228,7 +243,9 @@ const Home = () => {
             </h5>
           </div>
           <LocationSearchPanel
-            suggestions={activeField === 'pickup' ? pickupSuggestions : destinationSuggestions}
+            suggestions={activeField === 'pickup'
+              ? pickupSuggestions.map(suggestion => ({ name: suggestion }))
+              : destinationSuggestions.map(suggestion => ({ name: suggestion }))}
             setPickup={setPickup}
             setDestination={setDestination}
             activeField={activeField}
@@ -240,14 +257,27 @@ const Home = () => {
       </div>
       {/* vehicle panel */}
       <div ref={vehiclePanelRef} className='fixed translate-y-full w-full bottom-0 z-10 bg-white p-3 pb-10 flex flex-col gap-2'>
-        <VehiclePanel fare={fare} setVehiclePanel={setVehiclePanel} setconfirmRidePanel={setconfirmRidePanel} />
+        <VehiclePanel setVehicleType={setVehicleType} fare={fare} setVehiclePanel={setVehiclePanel} setconfirmRidePanel={setconfirmRidePanel} />
       </div>
       {/* confirm ride panel */}
       <div ref={confirmRidePanelRef} className='fixed translate-y-full w-full bottom-0 z-10 bg-white py-10 pt-12'>
-        <ConfirmedRide setconfirmRidePanel={setconfirmRidePanel} setVehiclePanel={setVehiclePanel} setlookingForDriverPanel={setlookingForDriverPanel} />
+        <ConfirmedRide
+          pickup={pickup}
+          destination={destination}
+          fare={fare}
+          vehicleType={vehicleType}
+          createRide={createRide}
+          setconfirmRidePanel={setconfirmRidePanel}
+          setVehiclePanel={setVehiclePanel}
+          setlookingForDriverPanel={setlookingForDriverPanel} />
       </div>
       <div ref={lookingForDriverPanelRef} className='fixed translate-y-full w-full bottom-0 z-10 bg-white py-10 pt-12'>
-        <LookingForDriver setlookingForDriverPanel={setlookingForDriverPanel} />
+        <LookingForDriver
+          pickup={pickup}
+          destination={destination}
+          fare={fare}
+          vehicleType={vehicleType}
+          setlookingForDriverPanel={setlookingForDriverPanel} />
       </div>
       <div ref={WaitingForDriverRef} className="fixed w-full bottom-0 z-10 bg-white pb-2 p-4">
         <WaitingForDriverComponent

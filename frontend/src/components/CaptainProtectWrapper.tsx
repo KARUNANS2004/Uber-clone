@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
-import { CaptainDataContext } from '../context/CaptainContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { CaptainDataContext } from '../context/CaptainContext'
 
 interface CaptainProtectWrapperProps {
     children: React.ReactNode
@@ -9,7 +9,9 @@ interface CaptainProtectWrapperProps {
 
 const CaptainProtectWrapper: React.FC<CaptainProtectWrapperProps> = ({ children }) => {
 
-    const { captain, setCaptain, isLoading, setIsLoading } = useContext(CaptainDataContext)
+    const captainContext = useContext(CaptainDataContext)
+
+    const { captain, setCaptain, isLoading, setIsLoading } = captainContext || {}
 
 
     const navigate = useNavigate();
@@ -18,7 +20,7 @@ const CaptainProtectWrapper: React.FC<CaptainProtectWrapperProps> = ({ children 
         if (!token) {
             navigate('/captain-login')
         }
-    }, [navigate])
+    }, [navigate, localStorage])
 
     axios.get(`${import.meta.env.VITE_API_BASE_URI}/captains/profile`, {
         headers: {
@@ -26,8 +28,8 @@ const CaptainProtectWrapper: React.FC<CaptainProtectWrapperProps> = ({ children 
         }
     }).then((response) => {
         if (response.status === 200) {
-            setCaptain(response.data.captain)
-            setIsLoading(false)
+            setCaptain && setCaptain(response.data.captain)
+            setIsLoading && setIsLoading(false)
         }
     }).catch((err) => {
         console.log(err)

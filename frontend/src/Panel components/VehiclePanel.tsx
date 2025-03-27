@@ -7,7 +7,8 @@ interface VehiclePanelProps {
     auto: number,
     car: number,
     motorcycle: number
-  }
+  },
+  setVehicleType: React.Dispatch<React.SetStateAction<"auto" | "car" | "motorcycle">>
 }
 
 const VehiclePanel = (props: VehiclePanelProps) => {
@@ -27,6 +28,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
       <div onClick={() => {
         props.setconfirmRidePanel(true)
         props.setVehiclePanel(false)
+        props.setVehicleType("car")
       }} className="flex active:border-2 active:border-black bg-gray-100 shadow-inner shadow-gray-200 max-h-20 rounded-xl p-3 items-center justify-between">
         <img
           className="h-12"
@@ -50,6 +52,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
       <div onClick={() => {
         props.setconfirmRidePanel(true)
         props.setVehiclePanel(false)
+        props.setVehicleType("motorcycle")
       }} className="flex active:border-2 active:border-black bg-gray-100 shadow-inner shadow-gray-200 max-h-20 rounded-xl p-3 items-center justify-between">
         <img
           className="h-12"
@@ -73,6 +76,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
       <div onClick={() => {
         props.setconfirmRidePanel(true)
         props.setVehiclePanel(false)
+        props.setVehicleType("auto")
       }} className="flex active:border-2 active:border-black bg-gray-100 shadow-inner shadow-gray-200 max-h-20 rounded-xl p-3 items-center justify-between">
         <img
           className="h-12"

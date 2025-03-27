@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import UserContext from './context/UserContext.tsx'
-import { CaptainContext, CaptainDataContext } from './context/CaptainContext.tsx'
+import CaptainContext from './context/CaptainContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
