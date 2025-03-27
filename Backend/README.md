@@ -533,3 +533,164 @@ GET /rides/get-fare?pickup=563/11-A, Kaikondrahalli, Bengaluru Karnataka&destina
 ### Notes:
 
 - Ensure that the `Authorization` header contains the token when making the request.
+
+# Uber Clone - Frontend
+
+This project is the frontend for an Uber-like application built with React, TypeScript, and Vite. It includes features for user and captain registration, login, ride booking, and more.
+
+## Features
+
+- User and Captain registration and login.
+- Ride booking with fare calculation.
+- Real-time ride status updates.
+- Context API for state management.
+- Integration with a backend API for authentication and ride management.
+
+## Tech Stack
+
+- **React**: For building the user interface.
+- **TypeScript**: For type-safe development.
+- **Vite**: For fast development and build tooling.
+- **Tailwind CSS**: For styling.
+- **Axios**: For API requests.
+- **GSAP**: For animations.
+
+---
+
+## Available Scripts
+
+### Development Server
+
+To start the development server:
+
+```bash
+npm run dev
+```
+
+### Build
+
+To build the project for production:
+
+```bash
+npm run build
+```
+
+### Lint
+
+To lint the project:
+
+```bash
+npm run lint
+```
+
+---
+
+## Environment Variables
+
+The following environment variables are required for the project:
+
+- `VITE_BASE_URL_FOR_BACKEND`: The base URL for the backend API.
+
+Example `.env` file:
+
+```env
+VITE_BASE_URL_FOR_BACKEND=http://localhost:3000
+```
+
+---
+
+## Project Structure
+
+```
+frontend/
+├── public/               # Static assets
+├── src/                  # Source code
+│   ├── components/       # React components
+│   ├── context/          # Context API for state management
+│   ├── Panel components/ # UI panels for ride booking
+│   ├── App.tsx           # Main application component
+│   ├── main.tsx          # Entry point
+│   └── index.css         # Global styles
+├── .env                  # Environment variables
+├── package.json          # Project configuration
+├── tailwind.config.js    # Tailwind CSS configuration
+└── vite.config.ts        # Vite configuration
+```
+
+---
+
+## Key Components
+
+### User Signup (`src/components/UserSignup.tsx`)
+
+Allows users to register by providing their name, email, and password.
+
+### User Login (`src/components/UserLogin.tsx`)
+
+Allows users to log in with their email and password.
+
+### Captain Signup (`src/components/CaptainSignup.tsx`)
+
+Allows captains to register by providing their name, email, password, and vehicle details.
+
+### Captain Login (`src/components/CaptainLogin.tsx`)
+
+Allows captains to log in with their email and password.
+
+### Home (`src/components/Home.tsx`)
+
+The main screen for users to book rides. Includes pickup and destination input fields, fare calculation, and ride confirmation.
+
+### Captain Home (`src/components/CaptainHome.tsx`)
+
+The main screen for captains to view their profile and ride details.
+
+---
+
+## State Management
+
+### User Context (`src/context/UserContext.tsx`)
+
+Manages the state for logged-in users, including their profile and authentication token.
+
+### Captain Context (`src/context/CaptainContext.tsx`)
+
+Manages the state for logged-in captains, including their profile and authentication token.
+
+---
+
+## API Endpoints
+
+### Backend Integration
+
+The frontend communicates with the backend API for the following features:
+
+- **User Registration**: `/users/register`
+- **User Login**: `/users/login`
+- **Captain Registration**: `/captains/register`
+- **Captain Login**: `/captains/login`
+- **Ride Fare Calculation**: `/rides/get-fare`
+- **Ride Creation**: `/rides/create`
+
+---
+
+## Animations
+
+The project uses **GSAP** for animations, including:
+
+- Sliding panels for ride booking.
+- Smooth transitions for ride confirmation and status updates.
+
+---
+
+## Styling
+
+The project uses **Tailwind CSS** for styling. All components are styled using utility classes for a consistent and responsive design.
+
+---
+
+## Notes
+
+- Ensure the backend server is running and accessible at the URL specified in `VITE_BASE_URL_FOR_BACKEND`.
+- Use the provided `.env` file to configure the environment variables.
+- For any issues, check the browser console and network tab for errors.
