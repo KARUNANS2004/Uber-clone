@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useDeferredValue, useEffect, useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import 'remixicon/fonts/remixicon.css'
@@ -8,6 +8,48 @@ import ConfirmedRide from '../Panel components/ConfirmedRide'
 import LookingForDriver from '../Panel components/LookingForDriver'
 import WaitingForDriverComponent from '../Panel components/WaitingForDriverComponent'
 import axios from 'axios'
+import { SocketContext } from '../context/SocketContext'
+import { UserContextData } from '../context/UserContext'
+import { useUserContext } from '../context/UserContext'
+import { useNavigate } from 'react-router-dom'
+
+interface rideStructure {
+  destination: string,
+  pickup: string,
+  fare: string,
+  status: string,
+  user: {
+    email: string,
+    fullName: {
+      firstName: string,
+      lastName: string
+    },
+    socketID: string,
+    _id: string
+  },
+  captain: {
+    fullName: {
+      firstName: string,
+      lastName: string
+    },
+    vehicle: {
+      color: string,
+      plate: string,
+      capacity: number,
+      vehicleType: string
+    },
+    location: {
+      latitude: number,
+      longitude: number
+    },
+    _id: string,
+    email: string,
+    status: string,
+    socketId: string
+  },
+  otp: string,
+  _id: string
+}
 
 const Home = () => {
   const [pickup, setPickup] = useState('')
@@ -18,12 +60,41 @@ const Home = () => {
   const [lookingForDriverPanel, setlookingForDriverPanel] = useState(false)
   const [WaitingForDriver, setWaitingForDriver] = useState(false)
 
-  const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([]);
-  const [destinationSuggestions, setDestinationSuggestions] = useState<string[]>([]);
+  const [pickupSuggestions, setPickupSuggestions] = useState<{ name: string, coordinates?: [number, number] }[]>([]);
+  const [destinationSuggestions, setDestinationSuggestions] = useState<{ name: string, coordinates?: [number, number] }[]>([]);
   const [activeField, setActiveField] = useState<string | null>(null)
 
   const [fare, setFare] = useState<{ auto: number, car: number, motorcycle: number }>({ auto: 0, car: 0, motorcycle: 0 })
   const [vehicleType, setVehicleType] = useState<"auto" | "car" | "motorcycle">("auto")
+  const [ride, setRide] = useState<rideStructure | null>(null)
+
+  const navigate = useNavigate()
+
+  const socketContext = useContext(SocketContext)
+  if (!socketContext) {
+    throw new Error("SocketContext is not available")
+  }
+  const { sendMessage, receiveMessage } = socketContext
+  const userContext = useUserContext()
+  const { user } = userContext
+
+  useEffect(() => {
+    sendMessage("join", { userType: "user", userId: user._id })
+  }, [user])
+
+  socketContext.receiveMessage("ride-confirmed", (ride) => {
+    console.log('Rider accepted the ride')
+    setVehiclePanel(false)
+    setWaitingForDriver(true);
+    setlookingForDriverPanel(false);
+    setRide(ride)
+  })
+
+  socketContext.receiveMessage("ride-started", (ride) => {
+    setWaitingForDriver(false);
+    console.log(ride)
+    navigate('/riding', { state: { ride } });
+  })
 
   // useref -- usedd with GSAP 
   const panelRef = useRef(null)
@@ -190,6 +261,7 @@ const Home = () => {
       </div>
       <div className='flex flex-col justify-end h-screen absolute bottom-0 w-full'>
         <div className='h-[30%] p-5 relative bg-white'>
+          <i className="ri-arrow-down-wide-line text-gray-400 text-4xl absolute right-5" onClick={() => { setPanelOpen(false) }}></i>
           <h4 className='text-2xl font-semibold'>Find a trip</h4>
           <form onSubmit={(e) => {
             submitHandler(e)
@@ -281,6 +353,7 @@ const Home = () => {
       </div>
       <div ref={WaitingForDriverRef} className="fixed w-full bottom-0 z-10 bg-white pb-2 p-4">
         <WaitingForDriverComponent
+          ride={ride}
           setlookingForDriverPanel={setlookingForDriverPanel}
           setWaitingForDriver={setWaitingForDriver}
         />

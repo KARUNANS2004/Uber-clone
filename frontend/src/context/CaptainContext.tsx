@@ -1,13 +1,18 @@
-import axios from "axios";
-import React, { useContext, useState, createContext, ReactNode, useEffect } from "react";
+import React, { createContext, ReactNode, useState, useContext } from 'react';
 
+// Type for the props
+interface CaptainContextProps {
+    children: ReactNode;
+}
 
-interface Captain {
+// Captain interface
+export interface Captain {
+    _id: string;
+    email: string;
     fullName: {
         firstName: string;
         lastName: string;
     };
-    email: string;
     status: string;
     vehicle: {
         color: string;
@@ -17,47 +22,50 @@ interface Captain {
     };
 }
 
-
+// Context type
 interface CaptainContextType {
-    captain: Captain | null;
-    setCaptain: React.Dispatch<React.SetStateAction<Captain | null>>;
-    isLoading: boolean;
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-    error: any;
-    setError: React.Dispatch<React.SetStateAction<any>>;
-    updateCaptain: (captainData: any) => void;
+    captain: Captain;
+    setCaptain: React.Dispatch<React.SetStateAction<Captain>>;
 }
 
-export const CaptainDataContext = createContext<CaptainContextType | null>(null);
+// Initial state
+const initialCaptainState: Captain = {
+    _id: '',
+    email: '',
+    fullName: {
+        firstName: '',
+        lastName: '',
+    },
+    status: '',
+    vehicle: {
+        color: '',
+        plate: '',
+        capacity: 0,
+        vehicleType: '',
+    },
+};
 
-interface captainContextProps {
-    children: ReactNode
-}
+// Create context
+export const CaptainContextData = createContext<CaptainContextType | null>(null);
 
-const CaptainContext: React.FC<captainContextProps> = ({ children }) => {
-    const [captain, setCaptain] = useState<Captain | null>(null)
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(null)
-
-    const updateCaptain = (captainData: Captain) => {
-        setCaptain(captainData);
-    }
-
-    const value = {
-        captain,
-        setCaptain,
-        isLoading,
-        setIsLoading,
-        error,
-        setError,
-        updateCaptain
-    }
+// Provider component
+const CaptainContext: React.FC<CaptainContextProps> = ({ children }) => {
+    const [captain, setCaptain] = useState<Captain>(initialCaptainState);
 
     return (
-        <CaptainDataContext.Provider value={value}>
+        <CaptainContextData.Provider value={{ captain, setCaptain }}>
             {children}
-        </CaptainDataContext.Provider>
-    )
-}
+        </CaptainContextData.Provider>
+    );
+};
+
+// Custom hook
+export const useCaptainContext = (): CaptainContextType => {
+    const context = useContext(CaptainContextData);
+    if (!context) {
+        throw new Error('useCaptainContext must be used within a CaptainContext provider');
+    }
+    return context;
+};
 
 export default CaptainContext;

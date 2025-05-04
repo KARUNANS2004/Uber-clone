@@ -1,57 +1,58 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useContext } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { SocketContext } from '../context/SocketContext'
+import { useNavigate } from 'react-router-dom'
 
 const Riding = () => {
+    const location = useLocation()
+    const { ride } = location?.state;
+    const socket = useContext(SocketContext)
+    const navigate = useNavigate()
+
+    socket?.receiveMessage("ride-ended", () => {
+        navigate('/home')
+    })
+
+
     return (
-        <div className='h-screen w-screen'>
-            <Link to={'/home'} className='right-2 top-2 fixed h-10 w-10 bg-white rounded-full flex items-center justify-center'>
-                <i className="ri-home-4-line"></i>
+        <div className='h-screen w-[99%] relative'>
+            <Link to='/home' className='fixed right-2 top-2 h-10 w-10 bg-white flex items-center justify-center rounded-full'>
+                <i className="text-lg font-medium ri-home-5-line"></i>
             </Link>
             <div className='h-1/2'>
                 <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" />
             </div>
-            <div className='h-1/2 w-screen flex items-center flex-col'>
-                <div className='flex justify-evenly items-center pr-4'>
-                    <img
-                        className='h-10'
-                        src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png"
-                    />
+            <div className='h-1/2 p-4'>
+                <div className='flex items-center justify-between'>
+                    <img className='h-12' src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg" alt="" />
                     <div className='text-right'>
-                        <h2 className='text-lg font-medium'>Ravi</h2>
-                        <h4 className='text-xl font-semibold -mt-1 -mb-1'>UP 14 CV 5552</h4>
-                        <p className='text-sm text-gray-500'>Hyundai Creta</p>
-                    </div>
-                </div>
-                <div className=' w-screen flex flex-col justify-around items-center pt-2'>
-                    <div className='h-[1px] w-full bg-gray-200'></div>
-                    <div className='w-full pl-3 flex-col'>
-                        <div className='flex items-center pt-2'>
-                            <h1 className='text-2xl mr-5'><i className="ri-map-pin-range-fill"></i></h1>
-                            <div className='flex flex-col gap-2 justify-around w-full'>
-                                <h2 className='text-xl font-semibold '>563/11-A</h2>
-                                <p>Kaikondrahalli, Bengaluru Karnataka</p>
-                                <div className='h-[1px] w-full bg-gray-200'></div>
-                            </div>
+                        <h2 className='text-lg font-medium capitalize'>{ride?.captain.fullName.firstName}</h2>
+                        <h4 className='text-xl font-semibold -mt-1 -mb-1'>{ride?.captain.vehicle.plate}</h4>
+                        <p className='text-sm text-gray-600'>Maruti Suzuki Alto</p>
 
-                        </div>
-                        <div className='flex items-center pt-2'>
-                            <h1 className='text-2xl mr-5'><i className="ri-square-fill"></i></h1>
-                            <div className='flex flex-col gap-2 w-full'>
-                                <h2 className='text-xl font-semibold '>Third Wave Coffee</h2>
-                                <p>17th Cross Rd, PWD Quarters, 1st Sector, HSR Layout, Bengaluru, Karnataka</p>
-                                <div className='h-[1px] w-full bg-gray-200'></div>
+                    </div>
+                </div>
+
+                <div className='flex gap-2 justify-between flex-col items-center'>
+                    <div className='w-full mt-5'>
+
+                        <div className='flex items-center gap-5 p-3 border-b-2'>
+                            <i className="text-lg ri-map-pin-2-fill"></i>
+                            <div>
+                                <h3 className='text-lg font-medium'>562/11-A</h3>
+                                <p className='text-sm -mt-1 text-gray-600'>{ride?.destination}</p>
                             </div>
                         </div>
-                        <div className='flex pb-4 pt-2'>
-                            <h1 className='text-2xl mr-5'><i className="ri-bank-card-2-fill"></i></h1>
-                            <div className='flex flex-col gap-2 w-full'>
-                                <h2 className='text-xl font-semibold '>₹193.20</h2>
-                                <p>Cash Payment</p>
+                        <div className='flex items-center gap-5 p-3'>
+                            <i className="ri-currency-line"></i>
+                            <div>
+                                <h3 className='text-lg font-medium'>₹{ride?.fare} </h3>
+                                <p className='text-sm -mt-1 text-gray-600'>Cash Cash</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button className='w-11/12 bg-green-500 hover:bg-green-600 active:bg-green-600 text-white font-semibold p-2 rounded-lg'>Make Payment</button>
+                <button className='w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg'>Make a Payment</button>
             </div>
         </div>
     )

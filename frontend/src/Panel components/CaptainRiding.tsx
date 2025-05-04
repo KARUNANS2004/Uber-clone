@@ -1,12 +1,14 @@
 import { useGSAP } from '@gsap/react';
 import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import FinishRide from './FinishRide';
 import gsap from 'gsap';
 
 const CaptainRiding = () => {
     const [finishRidePanel, setFinishRidePanel] = useState(false)
     const finishRidePanelRef = useRef(null)
+    const location = useLocation()
+    const rideData = location.state.ride;
 
     useGSAP(() => {
         if (finishRidePanel) {
@@ -41,7 +43,9 @@ const CaptainRiding = () => {
                 <button className='w-full bg-green-500 hover:bg-green-600 active:bg-green-600 text-white font-semibold p-2 rounded-lg'>Complete Ride</button>
             </div>
             <div ref={finishRidePanelRef} className='fixed translate-y-full  w-full bottom-0 z-10 bg-white py-5 rounded-lg'>
-                <FinishRide setFinishRidePanel={setFinishRidePanel} />
+                <FinishRide
+                    rideData={rideData}
+                    setFinishRidePanel={setFinishRidePanel} />
             </div>
         </div>
     )

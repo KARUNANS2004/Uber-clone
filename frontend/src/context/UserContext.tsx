@@ -1,20 +1,17 @@
-// we will use (Context API) to manage the user state globally 
+import React, { createContext, ReactNode, useState, useContext } from 'react';
 
-// we can also use Redux or MobX for state management
-
-import React, { createContext, ReactNode, useState } from 'react'
-
-// way to declare the type of children in ts+react
-interface UserContextProps{
-    children:ReactNode
+// Way to declare the type of children in ts+react
+interface UserContextProps {
+    children: ReactNode;
 }
 
-interface User{
-    email:string,
-    fullName:{
-        firstName:string,
-        lastName:string
-    }
+interface User {
+    _id: string,
+    email: string;
+    fullName: {
+        firstName: string;
+        lastName: string;
+    };
 }
 
 interface UserContextType {
@@ -22,23 +19,36 @@ interface UserContextType {
     setUser: React.Dispatch<React.SetStateAction<User>>;
 }
 
-// Now lets make the context
-export const UserContextData= createContext<UserContextType | undefined>(undefined)
+// Initial state type
+const initialUserState: User = {
+    _id: '',
+    email: '',
+    fullName: {
+        firstName: '',
+        lastName: '',
+    },
+};
 
-const UserContext:React.FC<UserContextProps> = ({children}) => {
-    const [user,setUser]=useState({
-        email:'',
-        fullName:{
-            firstName:'',
-            lastName:''
-        }
-    })
+// Now lets make the context
+export const UserContextData = createContext<UserContextType | null>(null);
+
+const UserContext: React.FC<UserContextProps> = ({ children }) => {
+    const [user, setUser] = useState<User>(initialUserState);
 
     return (
-        <UserContextData.Provider value={{user,setUser}}>
+        <UserContextData.Provider value={{ user, setUser }}>
             {children}
         </UserContextData.Provider>
-    )
-}
+    );
+};
 
-export default UserContext
+// Custom hook for cleaner usage
+export const useUserContext = (): UserContextType => {
+    const context = useContext(UserContextData);
+    if (!context) {
+        throw new Error('useUserContext must be used within a UserContext provider');
+    }
+    return context;
+};
+
+export default UserContext;

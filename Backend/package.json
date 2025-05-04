@@ -20,6 +20,11 @@
     "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.5",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "socket.io": "^4.8.1"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.9",
+    "utf-8-validate": "^6.0.5"
   }
 }

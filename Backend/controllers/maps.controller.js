@@ -31,10 +31,6 @@ module.exports.getDistanceTime = async (req, res,next) => {
         const pickupCoords = await mapService.getAddressCoordinates(pickup);
         const destinationCoords = await mapService.getAddressCoordinates(destination);
 
-        console.log("pickup Coordinates:", pickupCoords);
-        console.log("Destination Coordinates:", destinationCoords);
-
-
         // Construct coordinates in the required format for ORS API
         const pickupStr = `${pickupCoords.lng},${pickupCoords.lat}`;
         const destinationStr = `${destinationCoords.lng},${destinationCoords.lat}`;

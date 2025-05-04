@@ -1,23 +1,44 @@
-import React, { useContext } from 'react'
-import UserContext from '../context/UserContext'
-import { CaptainDataContext } from '../context/CaptainContext'
+import { useEffect, useState } from 'react';
+import { useCaptainContext } from '../context/CaptainContext';
 
 const CaptainDetails = () => {
-    const captainContext = useContext(CaptainDataContext)
-    console.log(captainContext)
+    const { captain } = useCaptainContext(); // clean hook usage
+    const [captainFirstName, setCaptainFirstName] = useState('');
+    const [captainLastName, setCaptainLastName] = useState('');
 
-    if (!captainContext) {
-        return <div>Loading...</div>
-    }
-    const { captain } = captainContext
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible' && captain?.fullName?.firstName) {
+                setCaptainFirstName(captain.fullName.firstName);
+                setCaptainLastName(captain.fullName.lastName);
+            }
+        };
 
-    console.log(`line 17 : ${captain?.fullName.firstName}`)
+        if (captain?.fullName?.firstName) {
+            handleVisibilityChange();
+        }
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, [captain]);
+
+    if (!captain._id) return <div>Loading...</div>; // ensures valid captain object
+
     return (
         <div>
-            <div className='flex items-center justify-between'>
+            <div className='flex flex-wrap items-center justify-between'>
                 <div className='flex items-center justify-start gap-3'>
-                    <img className='h-16 w-16 rounded-full object-cover' src="https://live.staticflickr.com/5252/5403292396_0804de9bcf_b.jpg" alt="" />
-                    <h4 className='text-lg font-medium'>{captainContext.captain?.fullName.firstName}</h4>
+                    <img
+                        className='h-16 w-16 rounded-full object-cover'
+                        src='https://live.staticflickr.com/5252/5403292396_0804de9bcf_b.jpg'
+                        alt='Captain'
+                    />
+                    <h4 className='text-lg font-medium capitalize'>
+                        {captainFirstName + ' ' + captainLastName}
+                    </h4>
                 </div>
                 <div>
                     <h4 className='text-xl font-semibold'>₹295.20</h4>
@@ -26,23 +47,23 @@ const CaptainDetails = () => {
             </div>
             <div className='flex p-3 mt-6 bg-gray-100 rounded-xl justify-center gap-4 items-start'>
                 <div className='text-center'>
-                    <i className="text-3xl mb-2 font-extralight  ri-timer-2-line"></i>
+                    <i className='text-3xl mb-2 font-extralight ri-timer-2-line'></i>
                     <h5 className='text-lg font-medium'>10.2</h5>
-                    <p className='text-sm text-gray-600 '>Hours Online</p>
+                    <p className='text-sm text-gray-600'>Hours Online</p>
                 </div>
                 <div className='text-center'>
-                    <i className="text-3xl mb-2 font-extralight  ri-speed-up-line"></i>
+                    <i className='text-3xl mb-2 font-extralight ri-speed-up-line'></i>
                     <h5 className='text-lg font-medium'>10.2</h5>
-                    <p className='text-sm text-gray-600 '>Hours Online</p>
+                    <p className='text-sm text-gray-600'>Hours Online</p>
                 </div>
                 <div className='text-center'>
-                    <i className="text-3xl mb-2 font-extralight  ri-booklet-line"></i>
+                    <i className='text-3xl mb-2 font-extralight ri-booklet-line'></i>
                     <h5 className='text-lg font-medium'>10.2</h5>
-                    <p className='text-sm text-gray-600 '>Hours Online</p>
+                    <p className='text-sm text-gray-600'>Hours Online</p>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CaptainDetails
+export default CaptainDetails;
