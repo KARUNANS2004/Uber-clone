@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Start from './components/Start'
 import UserLogin from './components/UserLogin'
@@ -14,8 +13,6 @@ import Riding from './components/Riding'
 import CaptainRiding from './Panel components/CaptainRiding'
 
 const App = () => {
-  const [captainEmail, setCaptainEmail] = useState("");
-  const [captainFirstName, setCaptainFirstName] = useState("");
   return (
     <div className='max-h-screen'>
       <Routes>

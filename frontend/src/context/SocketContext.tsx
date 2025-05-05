@@ -1,4 +1,4 @@
-import React, { Children, createContext, ReactNode, useEffect } from 'react'
+import React, { createContext, ReactNode, useEffect } from 'react'
 import { io } from "socket.io-client"
 
 export const SocketContext = createContext<{

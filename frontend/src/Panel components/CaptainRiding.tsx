@@ -1,8 +1,9 @@
 import { useGSAP } from '@gsap/react';
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import FinishRide from './FinishRide';
 import gsap from 'gsap';
+import LiveTracking from '../components/LiveTracking';
 
 const CaptainRiding = () => {
     const [finishRidePanel, setFinishRidePanel] = useState(false)
@@ -31,7 +32,7 @@ const CaptainRiding = () => {
                 </Link>
             </div>
             <div className='h-4/5'>
-                <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" />
+                <LiveTracking />
             </div>
             <div className='h=1/5 p-6 bg-yellow-400 flex items-center justify-center relative' onClick={() => {
                 setFinishRidePanel(true);

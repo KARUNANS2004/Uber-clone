@@ -1,55 +1,54 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import UserContext from '../context/UserContext'
 import { UserContextData } from '../context/UserContext'
 
 const UserSignup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [userData, setUserData] = useState({})
-  const [firstName,setFirstName]=useState('')
-  const [lastName,setLastName]=useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
 
   //navigation 
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   //Context API
-  const context= useContext(UserContextData)
+  const context = useContext(UserContextData)
 
   if (!context) {
     throw new Error('UserContext must be used within a UserProvider');
   }
 
-  const {user,setUser}=context;
-  
-  useEffect(()=>{
-    console.log(userData)
-  },[userData])
+  const { user, setUser } = context;
 
-  const submitHandler=async  (e:React.FormEvent<HTMLFormElement>)=>{
+  useEffect(() => {
+    console.log(userData)
+  }, [userData])
+
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newUser={
-      fullName:{
-        firstName:firstName,
-        lastName:lastName,
+    const newUser = {
+      fullName: {
+        firstName: firstName,
+        lastName: lastName,
       },
-      email:email,
-      password:password
+      email: email,
+      password: password
     }
 
-    const response =await axios.post(`${import.meta.env.VITE_BASE_URL_FOR_BACKEND}/users/register`,newUser)
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL_FOR_BACKEND}/users/register`, newUser)
 
-    if(response.status===201){
-      const data=response.data
+    if (response.status === 201) {
+      const data = response.data
       setUser(data.user)
-      localStorage.setItem('token',data.token)
-      if(localStorage.getItem('token')){
+      localStorage.setItem('token', data.token)
+      if (localStorage.getItem('token')) {
         navigate('/home')
       }
     }
-    
+
     setFirstName('')
     setLastName('')
     setPassword('')
@@ -60,26 +59,26 @@ const UserSignup = () => {
     <div className='h-screen p-7 flex flex-col justify-between'>
       <div>
         <img className='w-16 mb-2' src="https://pngimg.com/d/uber_PNG24.png" alt="" />
-        <form onSubmit={(e)=>{
+        <form onSubmit={(e) => {
           submitHandler(e)
         }}>
           <h3 className='text-lg font-medium mb-2'>What's your Name</h3>
           <div className='flex gap-2'>
-            <input 
+            <input
               type="text"
               value={firstName}
-              onChange={(e)=>{
+              onChange={(e) => {
                 setFirstName(e.target.value)
               }}
               required
               placeholder='First Name'
               className='rounded w-1/2 bg-[#eeeeee] mb-7 px-4 py-2 text-lg placeholder:text-base '
             />
-            <input 
+            <input
               type="text"
               required
               value={lastName}
-              onChange={(e)=>{
+              onChange={(e) => {
                 setLastName(e.target.value)
               }}
               placeholder='Last Name'
@@ -87,10 +86,10 @@ const UserSignup = () => {
             />
           </div>
           <h3 className='text-lg font-medium mb-2'>What's your email</h3>
-          <input 
+          <input
             type="email"
             value={email}
-            onChange={(e)=>{
+            onChange={(e) => {
               setEmail(e.target.value)
             }}
             required
@@ -98,11 +97,11 @@ const UserSignup = () => {
             className='rounded w-full bg-[#eeeeee] mb-7 px-4 py-2 text-lg placeholder:text-base '
           />
           <h3 className='text-lg font-medium mb-2'>Enter Password</h3>
-          <input 
+          <input
             type="password"
             required
             value={password}
-            onChange={(e)=>{
+            onChange={(e) => {
               setPassword(e.target.value)
             }}
             placeholder='Password'

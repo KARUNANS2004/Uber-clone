@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CaptainDetails from '../Panel components/CaptainDetails';
 import RidePopup from '../Panel components/RidePopup';
@@ -6,7 +6,7 @@ import ConfirmRidePopup from '../Panel components/ConfirmRidePopup';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useCaptainContext } from '../context/CaptainContext';
-import SocketProvider, { SocketContext } from '../context/SocketContext';
+import { SocketContext } from '../context/SocketContext';
 import { useContext } from 'react';
 import axios from 'axios';
 

@@ -12,6 +12,7 @@ import { SocketContext } from '../context/SocketContext'
 import { UserContextData } from '../context/UserContext'
 import { useUserContext } from '../context/UserContext'
 import { useNavigate } from 'react-router-dom'
+import LiveTracking from './LiveTracking'
 
 interface rideStructure {
   destination: string,
@@ -257,7 +258,7 @@ const Home = () => {
         setVehiclePanel(false)
       }} className='h-screen w-screen'>
         {/*Image for temporary usage*/}
-        <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="uber-map-image" />
+        <LiveTracking />
       </div>
       <div className='flex flex-col justify-end h-screen absolute bottom-0 w-full'>
         <div className='h-[30%] p-5 relative bg-white'>
