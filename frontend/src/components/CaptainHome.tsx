@@ -65,6 +65,7 @@ const CaptainHome = () => {
     }
 
     const locationInterval = setInterval(updateLocation, 5000); // Update location every 5 seconds
+    console.log(locationInterval)
     updateLocation()
   }, [captain._id, sendMessage]);
 
@@ -88,6 +89,7 @@ const CaptainHome = () => {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
+    console.log(response)
     setRidePopupPanel(false);
     setConfirmRidePopupPanel(true);
   }

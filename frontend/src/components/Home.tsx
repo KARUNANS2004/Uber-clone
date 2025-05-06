@@ -1,4 +1,4 @@
-import React, { useContext, useDeferredValue, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import 'remixicon/fonts/remixicon.css'
@@ -9,7 +9,6 @@ import LookingForDriver from '../Panel components/LookingForDriver'
 import WaitingForDriverComponent from '../Panel components/WaitingForDriverComponent'
 import axios from 'axios'
 import { SocketContext } from '../context/SocketContext'
-import { UserContextData } from '../context/UserContext'
 import { useUserContext } from '../context/UserContext'
 import { useNavigate } from 'react-router-dom'
 import LiveTracking from './LiveTracking'
@@ -75,7 +74,7 @@ const Home = () => {
   if (!socketContext) {
     throw new Error("SocketContext is not available")
   }
-  const { sendMessage, receiveMessage } = socketContext
+  const { sendMessage } = socketContext
   const userContext = useUserContext()
   const { user } = userContext
 

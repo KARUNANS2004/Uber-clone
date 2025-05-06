@@ -6,7 +6,7 @@ import { UserContextData } from '../context/UserContext'
 const UserSignup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [userData, setUserData] = useState({})
+  const [userData] = useState({})
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
 
@@ -18,10 +18,11 @@ const UserSignup = () => {
   const context = useContext(UserContextData)
 
   if (!context) {
-    throw new Error('UserContext must be used within a UserProvider');
+    throw new Error('UsserContext must be used within a UserProvider');
   }
 
   const { user, setUser } = context;
+  console.log(user)
 
   useEffect(() => {
     console.log(userData)

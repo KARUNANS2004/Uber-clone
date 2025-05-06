@@ -19,6 +19,7 @@ const UserProtectWrapper: React.FC<userProtectWrapperProps> = ({
     }
 
     const { user, setUser } = userContext
+    console.log(user)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {

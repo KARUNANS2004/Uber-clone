@@ -18,6 +18,7 @@ const UserLogin = () => {
     throw new Error('UserContext must be used within a UserProvider');
   }
   const { user, setUser } = context;
+  console.log(user)
 
   useEffect(() => {
     console.log(userData)

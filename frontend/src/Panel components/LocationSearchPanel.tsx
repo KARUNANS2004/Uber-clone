@@ -13,7 +13,7 @@ interface VehiclePanelProps {
 
 const LocationSearchPanel = (props: VehiclePanelProps) => {
 
-  const { suggestions = [], setVehiclePanel, setPanelOpen, setPickup, setDestination, activeField } = props;
+  const { suggestions = [], setPickup, setDestination, activeField } = props;
 
   const handleSuggestionClick = (suggestion: { name: string, coordinates?: [number, number] }) => { // Adjust the type accordingly
     if (activeField === 'pickup') {
