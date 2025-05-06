@@ -17,6 +17,7 @@ const CaptainProtectWrapper: React.FC<CaptainProtectWrapperProps> = ({ children 
     }
 
     const { captain, setCaptain, isLoading, setIsLoading } = captainContext;
+    console.log(captain)
 
     useEffect(() => {
         const token = localStorage.getItem('token');
