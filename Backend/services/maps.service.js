@@ -2,17 +2,24 @@ const axios = require('axios');
 const captainModel = require('../models/captain.model'); // Assuming you have a Captain model defined
 
 module.exports.getAddressCoordinates = async (address) => {
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+    // const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+
+    const apiKey = process.env.GOOGLE_DISTANCE_MATRIX_API_KEY;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
 
     try {
         const response = await axios.get(url);
 
-        if (response.data.length > 0) {
-            const location = response.data[0];
+        console.log(response.status)
+
+        if (response.data.status === 'OK') {
+            const location = response.data.results[0].geometry.location;
+
+            console.log(location)
 
             return {
-                lat: parseFloat(location.lat),
-                lng: parseFloat(location.lon)
+                lat: (location.lat),
+                lng: (location.lng)
             };
         } else {
             throw new Error('Unable to fetch coordinates');
@@ -56,19 +63,13 @@ module.exports.getAutocompleteSuggestions = async (input) => {
     if (!input) {
         throw new Error('Query is required');
     }
-
-    const apiKey = '5b3ce3597851110001cf62485187a523533f4d53bc882c761be8ad89'; // Your OpenRouteService API Key
-
-    const url = `https://api.openrouteservice.org/geocode/autocomplete?api_key=${apiKey}&text=${encodeURIComponent(input)}`;
+    const apiKey=process.env.GOOGLE_DISTANCE_MATRIX_API_KEY;
+    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
 
     try {
         const response = await axios.get(url);
-
-        if (response.data && response.data.features.length > 0) {
-            return response.data.features.map(place => ({
-                name: place.properties.label,
-                coordinates: place.geometry.coordinates
-            }));
+        if (response.data.status=== 'OK') {
+            return response.data.predictions.map(prediction => prediction.description);
         } else {
             throw new Error('No suggestions found');
         }

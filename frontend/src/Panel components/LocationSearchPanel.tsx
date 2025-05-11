@@ -8,18 +8,18 @@ interface VehiclePanelProps {
   setPickup: React.Dispatch<React.SetStateAction<string>>,
   setDestination: React.Dispatch<React.SetStateAction<string>>,
   activeField: 'pickup' | 'destination' | null | string,
-  suggestions: Array<{ name: { name: string, coordinates?: [number, number] } }>, // Define the structure of suggestions
+  suggestions: string[], // Define the structure of suggestions
 }
 
 const LocationSearchPanel = (props: VehiclePanelProps) => {
 
   const { suggestions = [], setPickup, setDestination, activeField } = props;
 
-  const handleSuggestionClick = (suggestion: { name: string, coordinates?: [number, number] }) => { // Adjust the type accordingly
+  const handleSuggestionClick = (suggestion: string) => { // Adjust the type accordingly
     if (activeField === 'pickup') {
-      setPickup(suggestion.name); // Extract the name property
+      setPickup(suggestion); // Extract the name property
     } else if (activeField === 'destination') {
-      setDestination(suggestion.name); // Extract the name property
+      setDestination(suggestion); // Extract the name property
     }
     // setPanelOpen(false);
   }
@@ -29,13 +29,14 @@ const LocationSearchPanel = (props: VehiclePanelProps) => {
         suggestions.map((element, index) => (
           <div
             key={index}
-            onClick={() => handleSuggestionClick(element.name)}
+            onClick={() => handleSuggestionClick(element)}
             className='flex cursor-pointer gap-4 border-2 p-3 border-gray-50 active:border-black rounded-xl items-center my-2 justify-start'
           >
-            <h2 className='bg-[#eee] h-8 flex items-center justify-center w-12 rounded-full'>
+            <h2 className='bg-[#eee] min-w-[40px] h-10 w-10 flex items-center justify-center rounded-full text-xl text-gray-700'>
               <i className="ri-map-pin-fill"></i>
             </h2>
-            <h4 className='font-medium'>{element.name.name}</h4>
+
+            <h4 className='font-medium'>{element}</h4>
           </div>
         ))
       }

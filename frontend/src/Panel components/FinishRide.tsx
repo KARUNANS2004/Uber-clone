@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface rideStructure {
@@ -22,11 +22,47 @@ interface rideStructure {
 
 interface finishRidePanelProps {
     setFinishRidePanel: React.Dispatch<React.SetStateAction<boolean>>
-    rideData: rideStructure | null
+    rideData: rideStructure | null,
+    captainLocation: {
+        latitude: number,
+        longitude: number
+    } | null,
+    setpickupLocation: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 const FinishRide = (props: finishRidePanelProps) => {
     const navigate = useNavigate()
+
+    const [distance, setDistance] = useState<number>()
+
+    useEffect(() => {
+        if (props.rideData?.pickup) {
+            props.setpickupLocation(props.rideData.pickup)
+        }
+    }, [props.rideData?.pickup])
+
+    useEffect(() => {
+        if (!props.rideData?.pickup || !props.captainLocation) return;
+
+        const fetchDistance = async () => {
+            try {
+                const response = await axios.get("http://localhost:4000/maps/get-distance-time", {
+                    params: {
+                        pickup: `${props.captainLocation?.latitude},${props.captainLocation?.longitude}`,
+                        destination: props.rideData?.pickup
+                    }
+                });
+
+                const roundedDistance = Math.round(response.data.distance)
+
+                setDistance(roundedDistance);
+            } catch (error) {
+                console.error("Error fetching distance:", error);
+            }
+        }
+
+        fetchDistance()
+    }, [props.captainLocation, props.rideData?.pickup])
 
     async function endRide() {
         const response = await axios.post('http://localhost:4000/rides/end-ride', {
@@ -57,30 +93,28 @@ const FinishRide = (props: finishRidePanelProps) => {
                     <img className='h-16 w-16 rounded-full object-cover' src="https://live.staticflickr.com/5252/5403292396_0804de9bcf_b.jpg" alt="" />
                     <h2 className='text-lg font-medium'>{props.rideData?.user.fullName.firstName + " " + props.rideData?.user.fullName.lastName}</h2>
                 </div>
-                <h5 className='text-lg font-semibold'>2.2 KM</h5>
+                <h5 className='text-lg font-semibold'>{distance} KM</h5>
             </div>
             <div className=' w-screen flex flex-col justify-between items-center px-2'>
                 <div className='h-[1px] w-full bg-gray-200'></div>
                 <div className='w-full pl-3 flex-col'>
                     <div className='flex items-center pt-2'>
-                        <h1 className='text-2xl mr-5'><i className="ri-map-pin-range-fill"></i></h1>
+                        <h1 className='text-2xl mr-5'><i className="ri-map-pin-user-fill"></i></h1>
                         <div className='flex flex-col gap-2 justify-around w-full'>
-                            <h2 className='text-xl font-semibold '>563/11-A</h2>
-                            <p>{props.rideData?.pickup}</p>
+                            <p className='font-medium'>{props.rideData?.pickup}</p>
                             <div className='h-[1px] w-full bg-gray-200'></div>
                         </div>
 
                     </div>
                     <div className='flex items-center pt-2'>
-                        <h1 className='text-2xl mr-5'><i className="ri-square-fill"></i></h1>
+                        <h1 className='text-2xl mr-5'><i className="ri-map-pin-2-fill"></i></h1>
                         <div className='flex flex-col gap-2 w-full'>
-                            <h2 className='text-xl font-semibold '>Third Wave Coffee</h2>
-                            <p>{props.rideData?.destination}</p>
+                            <p className='font-medium'>{props.rideData?.destination}</p>
                             <div className='h-[1px] w-full bg-gray-200'></div>
                         </div>
                     </div>
                     <div className='flex pb-4 pt-2'>
-                        <h1 className='text-2xl mr-5'><i className="ri-bank-card-2-fill"></i></h1>
+                        <h1 className='text-2xl mr-5'><i className="ri-currency-line"></i></h1>
                         <div className='flex flex-col gap-2 w-full'>
                             <h2 className='text-xl font-semibold '>₹{props.rideData?.fare}</h2>
                             <p>Cash Payment</p>

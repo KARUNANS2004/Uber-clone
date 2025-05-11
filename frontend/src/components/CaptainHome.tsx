@@ -34,6 +34,7 @@ const CaptainHome = () => {
   const confirmRidePopupPanelRef = useRef(null);
   const [ride, setRide] = useState<rideData | null>(null);
 
+  const [captainLocation, setCaptainLocation] = useState<{ latitude: number, longitude: number } | null>(null);
 
   const { captain } = useCaptainContext();
   const socketContext = useContext(SocketContext);
@@ -56,6 +57,7 @@ const CaptainHome = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           const { latitude, longitude } = position.coords;
+          setCaptainLocation({ latitude, longitude })
           sendMessage("update-location-captain", {
             userId: captain._id,
             location: { latitude, longitude }
@@ -131,6 +133,7 @@ const CaptainHome = () => {
 
       <div ref={ridePopupPanelRef} className='fixed translate-y-full w-full bottom-0 z-10 bg-white py-5 rounded-lg'>
         <RidePopup
+          captainLocation={captainLocation}
           ride={ride}
           setridePopupPanel={setRidePopupPanel}
           setConfirmRidePopupPanel={setConfirmRidePopupPanel}
@@ -140,6 +143,7 @@ const CaptainHome = () => {
 
       <div ref={confirmRidePopupPanelRef} className='fixed translate-y-full h-screen w-full bottom-0 z-10 bg-white py-5 rounded-lg'>
         <ConfirmRidePopup
+          captainLocation={captainLocation}
           ride={ride}
           setConfirmRidePopupPanel={setConfirmRidePopupPanel}
           setridePopupPanel={setRidePopupPanel}

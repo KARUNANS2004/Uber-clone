@@ -1,15 +1,83 @@
 import { useGSAP } from '@gsap/react';
-import { useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import FinishRide from './FinishRide';
 import gsap from 'gsap';
 import LiveTracking from '../components/LiveTracking';
+import { useCaptainContext } from '../context/CaptainContext';
+import { SocketContext } from '../context/SocketContext';
+import axios from 'axios';
 
 const CaptainRiding = () => {
     const [finishRidePanel, setFinishRidePanel] = useState(false)
     const finishRidePanelRef = useRef(null)
     const location = useLocation()
     const rideData = location.state.ride;
+
+    const { captain } = useCaptainContext();
+    const socketContext = useContext(SocketContext);
+
+    const [captainLocation, setCaptainLocation] = useState<{ latitude: number, longitude: number } | null>(null);
+    const [pickupLocation, setpickupLocation] = useState<string | null>(null)
+
+    const [distance, setDistance] = useState<number>()
+
+
+    useEffect(() => {
+        if (!pickupLocation || !captainLocation) return;
+
+        const fetchDistance = async () => {
+            try {
+                const response = await axios.get("http://localhost:4000/maps/get-distance-time", {
+                    params: {
+                        pickup: `${captainLocation?.latitude},${captainLocation?.longitude}`,
+                        destination: pickupLocation
+                    }
+                });
+
+                const roundedDistance = Math.round(response.data.distance)
+
+                setDistance(roundedDistance);
+            } catch (error) {
+                console.error("Error fetching distance:", error);
+            }
+        }
+
+        fetchDistance()
+    }, [captainLocation, pickupLocation])
+
+
+    if (!socketContext) {
+        throw new Error("SocketContext is not available");
+    }
+
+    const { sendMessage } = socketContext;
+
+    useEffect(() => {
+        if (captain._id) {
+            sendMessage("join", {
+                userType: "captain",
+                userId: captain._id
+            });
+        }
+
+        const updateLocation = () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const { latitude, longitude } = position.coords;
+                    setCaptainLocation({ latitude, longitude })
+                    sendMessage("update-location-captain", {
+                        userId: captain._id,
+                        location: { latitude, longitude }
+                    });
+                });
+            }
+        }
+
+        const locationInterval = setInterval(updateLocation, 5000); // Update location every 5 seconds
+        console.log(locationInterval)
+        updateLocation()
+    }, [captain._id, sendMessage]);
 
     useGSAP(() => {
         if (finishRidePanel) {
@@ -40,11 +108,13 @@ const CaptainRiding = () => {
                 <h5 className='p-1 text-center w-full text-gray-900 absolute top-0' onClick={() => {
                 }}><i className="ri-arrow-up-wide-line"></i></h5>
 
-                <h4 className='text-3xl font-semibold'>4Km Away</h4>
+                <h4 className='text-3xl font-semibold'>{distance}Km Away</h4>
                 <button className='w-full bg-green-500 hover:bg-green-600 active:bg-green-600 text-white font-semibold p-2 rounded-lg'>Complete Ride</button>
             </div>
             <div ref={finishRidePanelRef} className='fixed translate-y-full  w-full bottom-0 z-10 bg-white py-5 rounded-lg'>
                 <FinishRide
+                    setpickupLocation={setpickupLocation}
+                    captainLocation={captainLocation}
                     rideData={rideData}
                     setFinishRidePanel={setFinishRidePanel} />
             </div>

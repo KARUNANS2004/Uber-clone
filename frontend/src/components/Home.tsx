@@ -60,8 +60,8 @@ const Home = () => {
   const [lookingForDriverPanel, setlookingForDriverPanel] = useState(false)
   const [WaitingForDriver, setWaitingForDriver] = useState(false)
 
-  const [pickupSuggestions, setPickupSuggestions] = useState<{ name: string, coordinates?: [number, number] }[]>([]);
-  const [destinationSuggestions, setDestinationSuggestions] = useState<{ name: string, coordinates?: [number, number] }[]>([]);
+  const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([]);
+  const [destinationSuggestions, setDestinationSuggestions] = useState<string[]>([]);
   const [activeField, setActiveField] = useState<string | null>(null)
 
   const [fare, setFare] = useState<{ auto: number, car: number, motorcycle: number }>({ auto: 0, car: 0, motorcycle: 0 })
@@ -261,7 +261,7 @@ const Home = () => {
       </div>
       <div className='flex flex-col justify-end h-screen absolute bottom-0 w-full'>
         <div className='h-[30%] p-5 relative bg-white'>
-          <i className="ri-arrow-down-wide-line text-gray-400 text-4xl absolute right-5" onClick={() => { setPanelOpen(false) }}></i>
+          <i ref={panelCloseRef} className="ri-arrow-down-wide-line text-gray-400 text-4xl absolute right-5" onClick={() => { setPanelOpen(false) }}></i>
           <h4 className='text-2xl font-semibold'>Find a trip</h4>
           <form onSubmit={(e) => {
             submitHandler(e)
@@ -308,16 +308,11 @@ const Home = () => {
           </button>
         </div>
         {/* Location Panel */}
-        <div ref={panelRef} className='h-[0] px-5 bg-white flex flex-col'>
-          <div className='block '>
-            <h5 ref={panelCloseRef} className='opacity-0 text-center w-full text-4xl' onClick={() => { setPanelOpen(false) }}>
-              <i className="ri-arrow-down-wide-line text-gray-400"></i>
-            </h5>
-          </div>
+        <div ref={panelRef} className='h-[0] px-5 pt-10 bg-white flex flex-col'>
           <LocationSearchPanel
             suggestions={activeField === 'pickup'
-              ? pickupSuggestions.map(suggestion => ({ name: suggestion }))
-              : destinationSuggestions.map(suggestion => ({ name: suggestion }))}
+              ? pickupSuggestions
+              : destinationSuggestions}
             setPickup={setPickup}
             setDestination={setDestination}
             activeField={activeField}
@@ -329,7 +324,7 @@ const Home = () => {
       </div>
       {/* vehicle panel */}
       <div ref={vehiclePanelRef} className='fixed translate-y-full w-full bottom-0 z-10 bg-white p-3 pb-10 flex flex-col gap-2'>
-        <VehiclePanel setVehicleType={setVehicleType} fare={fare} setVehiclePanel={setVehiclePanel} setconfirmRidePanel={setconfirmRidePanel} />
+        <VehiclePanel pickup={pickup} destination={destination} setVehicleType={setVehicleType} fare={fare} setVehiclePanel={setVehiclePanel} setconfirmRidePanel={setconfirmRidePanel} />
       </div>
       {/* confirm ride panel */}
       <div ref={confirmRidePanelRef} className='fixed translate-y-full w-full bottom-0 z-10 bg-white py-10 pt-12'>

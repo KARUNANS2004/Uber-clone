@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 interface VehiclePanelProps {
   setVehiclePanel: React.Dispatch<React.SetStateAction<boolean>>
@@ -9,9 +10,67 @@ interface VehiclePanelProps {
     motorcycle: number
   },
   setVehicleType: React.Dispatch<React.SetStateAction<"auto" | "car" | "motorcycle">>
+  pickup: string;
+  destination: string;
 }
 
 const VehiclePanel = (props: VehiclePanelProps) => {
+  const [pickupCoords, setPickupCoords] = useState<{ lat: number, lng: number } | null>(null);
+  const [destinationCoords, setDestinationCoords] = useState<{ lat: number, lng: number } | null>(null);
+
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      console.log(props.pickup);
+      console.log(props.destination);
+      if (!props.pickup && !props.destination) {
+        console.warn("Pickup or destination is empty. Skipping API call.");
+        return;
+      }
+
+      try {
+        const pickupRes = await axios.get('http://localhost:4000/maps/get-coordinates', {
+          params: { address: props.pickup }
+        });
+
+        const destRes = await axios.get('http://localhost:4000/maps/get-coordinates', {
+          params: { address: props.destination }
+        });
+
+        console.log(pickupRes)
+        console.log(destRes)
+        setPickupCoords(pickupRes.data); // assuming response is { lat, lng }
+        setDestinationCoords(destRes.data);
+      } catch (error) {
+        console.error("Error fetching coordinates:", error);
+      }
+    };
+
+    fetchCoordinates();
+  }, [props.pickup, props.destination]);
+
+
+
+  useEffect(() => {
+    let url = ""
+    if (pickupCoords && destinationCoords) {
+      url = `http://localhost:4000/maps/get-estimated-time?origin=${pickupCoords.lat},${pickupCoords.lng}&destination=${destinationCoords?.lat},${destinationCoords?.lng}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
+    }
+
+    if (url) {
+      const getDistanceTime = async () => {
+        try {
+          const res = await axios.get(url);
+          console.log(res);
+        } catch (error) {
+          console.error("Error fetching distance/time data:", error);
+        }
+      };
+      getDistanceTime();
+    }
+
+  }, [pickupCoords, destinationCoords])
+
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between text-2xl font-semibold">
@@ -71,7 +130,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
             Affordable motorcycle rides
           </p>
         </div>
-        <h2 className="text-xl font-semibold">{props.fare.motorcycle}</h2>
+        <h2 className="text-xl font-semibold">₹{props.fare.motorcycle}</h2>
       </div>
       <div onClick={() => {
         props.setconfirmRidePanel(true)

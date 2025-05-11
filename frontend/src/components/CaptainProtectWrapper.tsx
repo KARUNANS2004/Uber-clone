@@ -16,7 +16,7 @@ const CaptainProtectWrapper: React.FC<CaptainProtectWrapperProps> = ({ children 
         throw new Error('CaptainProtectWrapper must be used within a CaptainDataProvider');
     }
 
-    const { captain, setCaptain, isLoading, setIsLoading } = captainContext;
+    const { captain, setCaptain, setIsLoading } = captainContext;
     console.log(captain)
 
     useEffect(() => {
@@ -53,9 +53,9 @@ const CaptainProtectWrapper: React.FC<CaptainProtectWrapperProps> = ({ children 
         fetchCaptainProfile();
     }, [navigate, setCaptain, setIsLoading]);
 
-    if (isLoading) {
-        return <div className="h-screen w-full flex items-center justify-center text-lg font-medium">Loading...</div>;
-    }
+    // if (isLoading) {
+    //     return <div className="h-screen w-full flex items-center justify-center text-lg font-medium">Loading...</div>;
+    // }
 
     return <>{children}</>;
 };
