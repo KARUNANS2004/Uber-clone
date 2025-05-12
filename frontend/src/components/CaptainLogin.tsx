@@ -23,6 +23,8 @@ const CaptainLogin = () => {
         const data = response.data;
         setCaptain(data.captain);
         localStorage.setItem('token', data.token);
+        // storing the time a which captain logs in
+        localStorage.setItem('captainOnlineStartTime', new Date().toISOString());
         navigate('/captain-home');
       }
     } catch (error) {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCaptainContext } from '../context/CaptainContext';
+import CaptainTotalTimeOnline from './CaptainTotalTimeOnline';
 
 const CaptainDetails = () => {
     const { captain } = useCaptainContext(); // clean hook usage
@@ -48,18 +49,13 @@ const CaptainDetails = () => {
             <div className='flex p-3 mt-6 bg-gray-100 rounded-xl justify-center gap-4 items-start'>
                 <div className='text-center'>
                     <i className='text-3xl mb-2 font-extralight ri-timer-2-line'></i>
-                    <h5 className='text-lg font-medium'>10.2</h5>
-                    <p className='text-sm text-gray-600'>Hours Online</p>
-                </div>
-                <div className='text-center'>
-                    <i className='text-3xl mb-2 font-extralight ri-speed-up-line'></i>
-                    <h5 className='text-lg font-medium'>10.2</h5>
-                    <p className='text-sm text-gray-600'>Hours Online</p>
+                    <h5 className='text-lg font-medium'><CaptainTotalTimeOnline /></h5>
+                    <p className='text-sm text-gray-600'>Time Online</p>
                 </div>
                 <div className='text-center'>
                     <i className='text-3xl mb-2 font-extralight ri-booklet-line'></i>
                     <h5 className='text-lg font-medium'>10.2</h5>
-                    <p className='text-sm text-gray-600'>Hours Online</p>
+                    <p className='text-sm text-gray-600'>Distance Travelled</p>
                 </div>
             </div>
         </div>
