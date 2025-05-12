@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const CaptainTotalTimeOnline = () => {
     const [timeOnline, settimeOnline] = useState('00:00:00')
