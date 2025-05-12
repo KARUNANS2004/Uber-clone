@@ -27,6 +27,8 @@ const CaptainProtectWrapper: React.FC<CaptainProtectWrapperProps> = ({ children 
             return;
         }
 
+        if (captain) return;
+
         const fetchCaptainProfile = async () => {
             setIsLoading(true);
             try {

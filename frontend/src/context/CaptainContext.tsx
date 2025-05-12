@@ -26,6 +26,7 @@ export interface Captain {
 interface CaptainContextType {
     captain: Captain;
     setCaptain: React.Dispatch<React.SetStateAction<Captain>>;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 // Initial state
@@ -45,15 +46,19 @@ const initialCaptainState: Captain = {
     },
 };
 
+const initialLoadingState: boolean = false;
+
 // Create context
 export const CaptainContextData = createContext<CaptainContextType | null>(null);
 
 // Provider component
 const CaptainContext: React.FC<CaptainContextProps> = ({ children }) => {
     const [captain, setCaptain] = useState<Captain>(initialCaptainState);
+    const [isLoading, setIsLoading] = useState<boolean>(initialLoadingState);
+    console.log(isLoading)
 
     return (
-        <CaptainContextData.Provider value={{ captain, setCaptain }}>
+        <CaptainContextData.Provider value={{ captain, setCaptain, setIsLoading }}>
             {children}
         </CaptainContextData.Provider>
     );

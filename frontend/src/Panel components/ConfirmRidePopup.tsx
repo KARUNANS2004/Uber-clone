@@ -21,7 +21,7 @@ interface rideData {
 
 interface ConfirmRidePopupPanelProps {
     setConfirmRidePopupPanel: React.Dispatch<React.SetStateAction<boolean>>,
-    setridePopupPanel: React.Dispatch<React.SetStateAction<boolean>>
+    setridePopupPanel: React.Dispatch<React.SetStateAction<boolean>>,
     ride: rideData | null,
     captainLocation: {
         latitude: number,
@@ -32,7 +32,6 @@ interface ConfirmRidePopupPanelProps {
 const ConfirmRidePopup = (props: ConfirmRidePopupPanelProps) => {
     const [OTP, setOTP] = useState('')
     const navigate = useNavigate()
-
     const [distance, setDistance] = useState<number>()
 
     useEffect(() => {
@@ -48,7 +47,6 @@ const ConfirmRidePopup = (props: ConfirmRidePopupPanelProps) => {
                 });
 
                 const roundedDistance = Math.round(response.data.distance)
-
                 setDistance(roundedDistance);
             } catch (error) {
                 console.error("Error fetching distance:", error);
@@ -77,65 +75,79 @@ const ConfirmRidePopup = (props: ConfirmRidePopupPanelProps) => {
             console.log("captain riding ", props.ride)
             navigate('/captain-riding', { state: { ride: props.ride } })
         }
-
     }
+
     return (
-        <div className='mt-10'>
-            <div className="px-3 flex justify-between text-2xl font-semibold">
-                <h5 className='p-1 text-center w-[93%] text-gray-300 absolute top-0' onClick={() => {
-                    props.setConfirmRidePopupPanel(false)
-                }}><i className="ri-arrow-down-wide-line"></i></h5>
-                <h3 className="text-xl font-bold mb-3">Confirm Your Ride</h3>
+        <div className='h-screen w-screen flex flex-col'>
+            {/* Header */}
+            <div className="px-3 py-2 flex justify-between items-center text-2xl font-semibold relative">
+                <h5 className='p-1 text-gray-300 absolute left-4' onClick={() => props.setConfirmRidePopupPanel(false)}>
+                    <i className="ri-arrow-down-wide-line"></i>
+                </h5>
+                <h3 className="text-xl font-bold mx-auto">Confirm Your Ride</h3>
             </div>
-            <div className='flex items-center justify-between p-3 mt-4 bg-yellow-400 rounded-lg mx-1'>
+
+            {/* Rider Card */}
+            <div className='flex items-center justify-between p-3 bg-yellow-400 rounded-lg mx-3'>
                 <div className='flex items-center gap-3'>
                     <img className='h-16 w-16 rounded-full object-cover' src="https://live.staticflickr.com/5252/5403292396_0804de9bcf_b.jpg" alt="" />
-                    <h2 className='text-lg font-medium'>{props.ride?.user.fullName.firstName + " " + props.ride?.user.fullName.lastName}</h2>
+                    <h2 className='text-lg font-medium'>
+                        {props.ride?.user.fullName.firstName + " " + props.ride?.user.fullName.lastName}
+                    </h2>
                 </div>
-                <h5 className='text-lg font-semibold'>{distance}KM</h5>
+                <h5 className='text-lg font-semibold'>{distance} KM</h5>
             </div>
-            <div className=' w-screen flex flex-col justify-between items-center px-2'>
-                <div className='h-[1px] w-full bg-gray-200'></div>
-                <div className='w-full pl-3 flex-col'>
-                    <div className='flex items-center pt-2'>
-                        <h1 className='text-2xl mr-5'><i className="ri-map-pin-user-fill"></i></h1>
-                        <div className='flex flex-col gap-2 justify-around w-full'>
-                            <p className='font-medium'>{props.ride?.pickup}</p>
-                            <div className='h-[1px] w-full bg-gray-200'></div>
-                        </div>
 
-                    </div>
-                    <div className='flex items-center pt-2'>
-                        <h1 className='text-2xl mr-5'><i className="ri-map-pin-2-fill"></i></h1>
-                        <div className='flex flex-col gap-2 w-full'>
-                            <p className='font-medium'>{props.ride?.destination}</p>
-                            <div className='h-[1px] w-full bg-gray-200'></div>
-                        </div>
-                    </div>
-                    <div className='flex pb-4 pt-2'>
-                        <h1 className='text-2xl mr-5'><i className="ri-currency-line"></i></h1>
-                        <div className='flex flex-col gap-2 w-full'>
-                            <h2 className='text-xl font-semibold '>₹{props.ride?.fare}</h2>
-                            <p>Cash Payment</p>
-                        </div>
+            {/* Ride Info Section */}
+            <div className='flex-1 flex flex-col justify-between px-4 mt-4 overflow-auto'>
+
+                {/* Pickup */}
+                <div className='flex items-start gap-3 mb-2 flex-1'>
+                    <i className="ri-map-pin-user-fill text-2xl mt-1" />
+                    <div className='flex flex-col justify-between w-full border-b pb-2'>
+                        <p className='font-medium'>{props.ride?.pickup}</p>
                     </div>
                 </div>
-                <div className='w-full flex flex-col'>
-                    <form onSubmit={(e) => {
-                        submitHandler(e)
-                    }} className='flex flex-col gap-2'>
-                        <input value={OTP} onChange={(e) => {
-                            setOTP(e.target.value)
-                        }} className='focus:outline-none  bg-[#eee] px-6 py-4 font-mono text-lg rounded-lg w-full mt-3' type="text" placeholder='Enter OTP' />
-                        <button className='w-full bg-green-500 hover:bg-green-600 active:bg-green-600 text-white font-semibold p-2 flex justify-center rounded-lg'>Confirm Ride</button>
 
-                        <button
-                            onClick={() => {
-                                props.setConfirmRidePopupPanel(false)
-                            }}
-                            className='w-full mt-1 bg-red-600 hover:bg-red-700 active:bg-red-700 text-white font-semibold p-2 rounded-lg'>Cancel Ride</button>
-                    </form>
+                {/* Destination */}
+                <div className='flex items-start gap-3 mb-2 flex-1'>
+                    <i className="ri-map-pin-2-fill text-2xl mt-1" />
+                    <div className='flex flex-col justify-between w-full border-b pb-2'>
+                        <p className='font-medium'>{props.ride?.destination}</p>
+                    </div>
                 </div>
+
+                {/* Fare */}
+                <div className='flex items-start gap-3 mb-2 flex-1'>
+                    <i className="ri-currency-line text-2xl mt-1" />
+                    <div className='flex flex-col justify-between w-full border-b pb-2'>
+                        <h2 className='text-xl font-semibold'>₹{props.ride?.fare}</h2>
+                        <p>Cash Payment</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* OTP Form Section */}
+            <div className='px-4 py-3'>
+                <form onSubmit={submitHandler} className='flex flex-col gap-3'>
+                    <input
+                        value={OTP}
+                        onChange={(e) => setOTP(e.target.value)}
+                        className='focus:outline-none bg-[#eee] px-6 py-4 font-mono text-lg rounded-lg w-full'
+                        type="text"
+                        placeholder='Enter OTP'
+                    />
+                    <button className='w-full bg-green-500 hover:bg-green-600 text-white font-semibold p-3 rounded-lg'>
+                        Confirm Ride
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => props.setConfirmRidePopupPanel(false)}
+                        className='w-full bg-red-600 hover:bg-red-700 text-white font-semibold p-3 rounded-lg'
+                    >
+                        Cancel Ride
+                    </button>
+                </form>
             </div>
         </div>
     )
