@@ -68,6 +68,8 @@ const Home = () => {
   const [vehicleType, setVehicleType] = useState<"auto" | "car" | "motorcycle">("auto")
   const [ride, setRide] = useState<rideStructure | null>(null)
 
+  const [paymentMethod, setPaymentMethod] = useState<"cash" | "online" | null>(null)
+
   const navigate = useNavigate()
 
   const socketContext = useContext(SocketContext)
@@ -336,7 +338,8 @@ const Home = () => {
           createRide={createRide}
           setconfirmRidePanel={setconfirmRidePanel}
           setVehiclePanel={setVehiclePanel}
-          setlookingForDriverPanel={setlookingForDriverPanel} />
+          setlookingForDriverPanel={setlookingForDriverPanel}
+          setPaymentMethod={setPaymentMethod} />
       </div>
       <div ref={lookingForDriverPanelRef} className='fixed translate-y-full w-full bottom-0 z-10 bg-white py-10 pt-12'>
         <LookingForDriver
@@ -344,7 +347,8 @@ const Home = () => {
           destination={destination}
           fare={fare}
           vehicleType={vehicleType}
-          setlookingForDriverPanel={setlookingForDriverPanel} />
+          setlookingForDriverPanel={setlookingForDriverPanel}
+          paymentMethod={paymentMethod} />
       </div>
       <div ref={WaitingForDriverRef} className="fixed w-full bottom-0 z-10 bg-white pb-2 p-4">
         <WaitingForDriverComponent

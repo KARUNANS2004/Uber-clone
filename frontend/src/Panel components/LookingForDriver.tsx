@@ -9,7 +9,8 @@ interface LookingForDriverProps {
         car: number,
         motorcycle: number
     },
-    vehicleType: 'auto' | 'car' | 'motorcycle'
+    vehicleType: 'auto' | 'car' | 'motorcycle',
+    paymentMethod: 'cash' | 'online' | null
 }
 
 const LookingForDriver = (props: LookingForDriverProps) => {
@@ -50,7 +51,7 @@ const LookingForDriver = (props: LookingForDriverProps) => {
                         <h1 className='text-2xl mr-5'><i className="ri-currency-line"></i></h1>
                         <div className='flex flex-col gap-2 w-full'>
                             <h2 className='text-xl font-semibold '>₹{props.fare[props.vehicleType]}</h2>
-                            <p>Cash Payment</p>
+                            <p>{props.paymentMethod} Payment</p>
                         </div>
                     </div>
                 </div>
