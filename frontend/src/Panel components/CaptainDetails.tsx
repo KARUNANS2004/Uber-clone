@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useCaptainContext } from '../context/CaptainContext';
 import CaptainTotalTimeOnline from './CaptainTotalTimeOnline';
+import CaptainDistanceTracker from './CaptainDistanceTracker';
 
 const CaptainDetails = () => {
     const { captain } = useCaptainContext(); // clean hook usage
@@ -26,7 +27,13 @@ const CaptainDetails = () => {
         };
     }, [captain]);
 
-    if (!captain._id) return <div>Loading...</div>; // ensures valid captain object
+    if (!captain._id) {
+        return (
+            <div className='h-screen w-screen flex items-center justify-center font-semibold text-2xl'>
+                <div className="w-12 h-12 border-4 border-t-transparent border-black rounded-full animate-spin"></div>
+            </div>
+        )
+    }; // ensures valid captain object
 
     return (
         <div>
@@ -54,7 +61,7 @@ const CaptainDetails = () => {
                 </div>
                 <div className='text-center'>
                     <i className='text-3xl mb-2 font-extralight ri-booklet-line'></i>
-                    <h5 className='text-lg font-medium'>10.2</h5>
+                    <h5 className='text-lg font-medium'>{<CaptainDistanceTracker />} KM</h5>
                     <p className='text-sm text-gray-600'>Distance Travelled</p>
                 </div>
             </div>

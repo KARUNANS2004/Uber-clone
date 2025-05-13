@@ -46,7 +46,9 @@ const UserProtectWrapper: React.FC<userProtectWrapperProps> = ({
 
     if (isLoading) {
         return (
-            <div>Loading...</div>
+            <div className='h-screen w-screen flex items-center justify-center font-semibold text-2xl'>
+                <div className="w-12 h-12 border-4 border-t-transparent border-black rounded-full animate-spin"></div>
+            </div>
         )
     }
 
