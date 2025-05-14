@@ -50,6 +50,7 @@ const CaptainSignup = () => {
         const data = response.data;
         setCaptain(data.captain);
         localStorage.setItem('token', data.token);
+        localStorage.setItem('captainOnlineStartTime', new Date().toISOString());
         navigate('/captain-home');
       }
     } catch (error) {
