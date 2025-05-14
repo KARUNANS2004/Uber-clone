@@ -46,7 +46,7 @@ const FinishRide = (props: finishRidePanelProps) => {
 
         const fetchDistance = async () => {
             try {
-                const response = await axios.get("http://localhost:4000/maps/get-distance-time", {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-distance-time`, {
                     params: {
                         pickup: `${props.captainLocation?.latitude},${props.captainLocation?.longitude}`,
                         destination: props.rideData?.pickup
@@ -65,7 +65,7 @@ const FinishRide = (props: finishRidePanelProps) => {
     }, [props.captainLocation, props.rideData?.pickup])
 
     async function endRide() {
-        const response = await axios.post('http://localhost:4000/rides/end-ride', {
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/end-ride`, {
             rideId: props.rideData?._id
         }, {
             headers: {

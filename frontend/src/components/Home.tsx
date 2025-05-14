@@ -113,7 +113,7 @@ const Home = () => {
   const handlePickupChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setPickup(e.target.value)
     try {
-      const response = await axios.get(`http://localhost:4000/maps/get-suggestion`, {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestion`, {
         params: {
           input: e.target.value
         },
@@ -131,7 +131,7 @@ const Home = () => {
   const handleDestinationChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setDestination(e.target.value)
     try {
-      const response = await axios.get(`http://localhost:4000/maps/get-suggestion`, {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestion`, {
         params: { input: e.target.value },
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -222,7 +222,7 @@ const Home = () => {
   async function findTrip() {
     setPanelOpen(false)
 
-    const res = await axios.get('http://localhost:4000/rides/get-fare', {
+    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`, {
       params: {
         pickup,
         destination
@@ -239,7 +239,7 @@ const Home = () => {
   }
 
   async function createRide() {
-    const res = await axios.post(`http://localhost:4000/rides/create`, {
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
       pickup,
       destination,
       vehicleType

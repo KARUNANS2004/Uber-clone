@@ -39,7 +39,7 @@ const RidePopup = (props: RidePopupProps) => {
 
         const fetchDistance = async () => {
             try {
-                const response = await axios.get("http://localhost:4000/maps/get-distance-time", {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-distance-time`, {
                     params: {
                         pickup: `${props.captainLocation?.latitude},${props.captainLocation?.longitude}`,
                         destination: props.ride?.pickup

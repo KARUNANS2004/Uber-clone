@@ -39,7 +39,7 @@ const ConfirmRidePopup = (props: ConfirmRidePopupPanelProps) => {
 
         const fetchDistance = async () => {
             try {
-                const response = await axios.get("http://localhost:4000/maps/get-distance-time", {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-distance-time`, {
                     params: {
                         pickup: `${props.captainLocation?.latitude},${props.captainLocation?.longitude}`,
                         destination: props.ride?.pickup
@@ -59,7 +59,7 @@ const ConfirmRidePopup = (props: ConfirmRidePopupPanelProps) => {
     const submitHandler = async (e: FormEvent) => {
         e.preventDefault();
 
-        const response = await axios.get(`http://localhost:4000/rides/start-ride`, {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`, {
             params: {
                 rideId: props.ride?._id,
                 otp: OTP

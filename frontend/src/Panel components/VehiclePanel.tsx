@@ -28,11 +28,11 @@ const VehiclePanel = (props: VehiclePanelProps) => {
       }
 
       try {
-        const pickupRes = await axios.get('http://localhost:4000/maps/get-coordinates', {
+        const pickupRes = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-coordinates`, {
           params: { address: props.pickup }
         });
 
-        const destRes = await axios.get('http://localhost:4000/maps/get-coordinates', {
+        const destRes = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-coordinates`, {
           params: { address: props.destination }
         });
 
@@ -53,7 +53,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
   useEffect(() => {
     let url = ""
     if (pickupCoords && destinationCoords) {
-      url = `http://localhost:4000/maps/get-estimated-time?origin=${pickupCoords.lat},${pickupCoords.lng}&destination=${destinationCoords?.lat},${destinationCoords?.lng}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
+      url = `${import.meta.env.VITE_BASE_URL}/maps/get-estimated-time?origin=${pickupCoords.lat},${pickupCoords.lng}&destination=${destinationCoords?.lat},${destinationCoords?.lng}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
     }
 
     if (url) {

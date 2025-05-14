@@ -70,7 +70,7 @@ module.exports.createRide = async ({
 }
 
 
-module.exports.confirmRide=async ({rideId, captain})=>{
+module.exports.confirmRide=async ({rideId, captainId})=>{
     if(!rideId){
         throw new Error('Ride id is required')
     }
@@ -79,7 +79,7 @@ module.exports.confirmRide=async ({rideId, captain})=>{
         _id:rideId
     },{
         status:'accepted',
-        captain:captain._id
+        captain:captainId
     })
 
     const ride=await rideModel.findOne({

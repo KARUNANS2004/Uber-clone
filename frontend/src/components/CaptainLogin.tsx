@@ -15,7 +15,7 @@ const CaptainLogin = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL_FOR_BACKEND}/captains/login`,
+        `${import.meta.env.VITE_BASE_URL}/captains/login`,
         { email, password }
       );
 

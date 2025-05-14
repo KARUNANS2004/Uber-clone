@@ -83,7 +83,8 @@ const CaptainHome = () => {
       return;
     }
     console.log("Console message at calling confirm ride\n", ride._id)
-    const response = await axios.post('http://localhost:4000/rides/confirm', {
+    console.log("Console message at calling confirm ride\n", captain._id)
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`, {
       rideId: ride._id,
       captainId: captain._id,
     }, {

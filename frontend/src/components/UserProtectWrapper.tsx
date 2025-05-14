@@ -27,7 +27,7 @@ const UserProtectWrapper: React.FC<userProtectWrapperProps> = ({
             navigate('/login')
         }
 
-        axios.get(`http://localhost:4000/users/profile`, {
+        axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

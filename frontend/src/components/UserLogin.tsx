@@ -31,7 +31,7 @@ const UserLogin = () => {
       password: password
     }
 
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL_FOR_BACKEND}/users/login`, userData)
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
     if (response.status === 200) {
       const data = response.data;
       setUser(data.user)
