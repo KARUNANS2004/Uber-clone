@@ -45,36 +45,36 @@ const UserLogin = () => {
   }
 
   return (
-    <div className='h-screen p-7 flex flex-col justify-between'>
+    <div className='h-screen p-7 flex flex-col justify-between bg-[#F2C883]'>
       <div>
-        <img className='w-16 mb-10' src="https://pngimg.com/d/uber_PNG24.png" alt="" />
+        <img className='w-16 mb-10 scale-[1.5]' src="\saarthi_pages_logo.png" alt="" />
         <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => { submitHandler(e) }}>
           {/*Also try to make a login via the phone number */}
-          <h3 className='text-xl font-medium mb-2'>What's your email</h3>
+          <h3 className='text-xl font-bold mb-2 text-[#1D2A44]'>What's your email</h3>
           <input
             type="email"
             value={email}
             onChange={(e) => { setEmail(e.target.value) }}
-            className='bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base '
+            className="bg-[#F7BD58] mb-7 rounded-md px-4 py-2 border border-[#D4932D] w-full text-[#1D2A44] text-lg placeholder:text-[#1D2A44] placeholder:text-base focus:outline-none focus:ring-2 focus:ring-[#D4932D]"
             required
             placeholder='email@example.com'
           />
-          <h3 className='text-xl mb-2'>Enter Password</h3>
+          <h3 className='text-xl mb-2 text-[#1D2A44] font-bold'>Enter Password</h3>
           <input
             type="password"
             value={password}
             onChange={(e) => { setPassword(e.target.value) }}
-            className='bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base '
+            className='bg-[#F7BD58] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base '
             required
             placeholder='password'
           />
-          <button className='bg-black text-white font-semibold mb-7 rounded px-4 py-2 w-full text-lg placeholder:text-base '
+          <button className=' bg-[#1D2A44] hover:bg-[#162033] text-white font-semibold mb-7 rounded-[8px] px-4 py-2 w-full text-lg placeholder:text-base transition duration-300'
           >Login</button>
-          <p className='text-center'>New here!<Link to='/signup' className='text-blue-600'>Create New Account</Link></p>
+          <p className='text-center'>New here!<Link to='/signup' className='text-blue-600 underline'>Create New Account</Link></p>
         </form>
       </div>
       <div>
-        <Link to='/captain-login' className='bg-[#1eae1e] flex items-center justify-center text-white font-semibold mb-7 rounded px-4 py-2 text-lg '>Sign in as captain</Link>
+        <Link to='/captain-login' className='bg-[#D4932D] hover:bg-[#b38130] flex items-center justify-center text-white font-semibold mb-7 rounded-[8px] px-4 py-2 text-lg tranition duration-300 '>Sign in as captain</Link>
       </div>
     </div>
   )

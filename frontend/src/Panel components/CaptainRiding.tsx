@@ -94,7 +94,7 @@ const CaptainRiding = () => {
         <div className='h-screen'>
 
             <div className='fixed p-3 top-0 flex items-center justify-between w-screen'>
-                <img className='w-16' src="https://pngimg.com/d/uber_PNG24.png" />
+                <img className='w-16 scale-[1.5]' src="\saarthi_pages_logo.png" />
                 <Link to={'/captain-login'} className='h-10 w-10 bg-white rounded-full flex items-center justify-center'>
                     <i className="ri-logout-box-r-line"></i>
                 </Link>

@@ -59,7 +59,7 @@ const UserSignup = () => {
   return (
     <div className='h-screen p-7 flex flex-col justify-between'>
       <div>
-        <img className='w-16 mb-2' src="https://pngimg.com/d/uber_PNG24.png" alt="" />
+        <img className='w-16 mb-2 scale-[1.5]' src="\saarthi_pages_logo.png" alt="" />
         <form onSubmit={(e) => {
           submitHandler(e)
         }}>
