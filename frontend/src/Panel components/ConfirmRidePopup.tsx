@@ -78,16 +78,15 @@ const ConfirmRidePopup = (props: ConfirmRidePopupPanelProps) => {
     }
 
     return (
-        <div className='h-screen w-screen flex flex-col text-[#1D2A44]'>
+        <div className='h-screen w-screen flex flex-col text-[#1D2A44] bg-[#F2C883] rounded-[8px]'>
             {/* Header */}
-            <div className="px-3 py-2 flex justify-between items-center text-2xl font-semibold relative">
+            <div className="px-3 py-2 mb-4 flex justify-between items-center text-2xl font-semibold relative">
                 <h3 className="text-xl font-bold mx-auto">Confirm Your Ride</h3>
             </div>
 
             {/* Rider Card */}
-            <div className='flex items-center justify-between p-3 bg-yellow-400 rounded-lg mx-3'>
+            <div className='flex items-center justify-between p-3 bg-[#f7b442] rounded-lg mx-3'>
                 <div className='flex items-center gap-3'>
-                    <img className='h-16 w-16 rounded-full object-cover' src="https://live.staticflickr.com/5252/5403292396_0804de9bcf_b.jpg" alt="" />
                     <h2 className='text-lg font-medium'>
                         {props.ride?.user.fullName.firstName + " " + props.ride?.user.fullName.lastName}
                     </h2>
@@ -99,25 +98,25 @@ const ConfirmRidePopup = (props: ConfirmRidePopupPanelProps) => {
             <div className='flex-1 flex flex-col justify-between px-4 mt-4 overflow-auto'>
 
                 {/* Pickup */}
-                <div className='flex items-start gap-3 mb-2 flex-1'>
+                <div className='flex items-start gap-3  flex-1'>
                     <i className="ri-map-pin-user-fill text-2xl mt-1" />
-                    <div className='flex flex-col justify-between w-full border-b pb-2'>
+                    <div className='flex flex-col justify-between w-full border-b border-b-[#D4932D] pb-2'>
                         <p className='font-medium'>{props.ride?.pickup}</p>
                     </div>
                 </div>
 
                 {/* Destination */}
-                <div className='flex items-start gap-3 mb-2 flex-1'>
+                <div className='flex items-start gap-3 flex-1'>
                     <i className="ri-map-pin-2-fill text-2xl mt-1" />
-                    <div className='flex flex-col justify-between w-full border-b pb-2'>
+                    <div className='flex flex-col justify-between w-full border-b border-b-[#D4932D] pb-2 '>
                         <p className='font-medium'>{props.ride?.destination}</p>
                     </div>
                 </div>
 
                 {/* Fare */}
-                <div className='flex items-start gap-3 mb-2 flex-1'>
+                <div className='flex items-start gap-3 flex-1'>
                     <i className="ri-currency-line text-2xl mt-1" />
-                    <div className='flex flex-col justify-between w-full border-b pb-2'>
+                    <div className='flex flex-col justify-between w-full border-b border-b-[#D4932D] pb-2'>
                         <h2 className='text-xl font-semibold'>₹{props.ride?.fare}</h2>
                         <p>Cash Payment</p>
                     </div>

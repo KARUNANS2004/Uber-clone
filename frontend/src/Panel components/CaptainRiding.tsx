@@ -102,7 +102,7 @@ const CaptainRiding = () => {
             <div className='h-4/5'>
                 <LiveTracking />
             </div>
-            <div className='h=1/5 p-6 bg-yellow-400 flex items-center justify-center relative' onClick={() => {
+            <div className='h=1/5 p-6 bg-[#f7b442] text-[#1D2A44] flex items-center justify-center relative' onClick={() => {
                 setFinishRidePanel(true);
             }}>
                 <h5 className='p-1 text-center w-full text-gray-900 absolute top-0' onClick={() => {
@@ -111,7 +111,7 @@ const CaptainRiding = () => {
                 <h4 className='text-3xl font-semibold'>{distance}Km Away</h4>
                 <button className='w-full bg-green-500 hover:bg-green-600 active:bg-green-600 text-white font-semibold p-2 rounded-lg'>Complete Ride</button>
             </div>
-            <div ref={finishRidePanelRef} className='fixed translate-y-full  w-full bottom-0 z-10 bg-white py-5 rounded-lg'>
+            <div ref={finishRidePanelRef} className='fixed translate-y-full  w-full bottom-0 z-10 bg-[#F2C883] py-5 rounded-lg'>
                 <FinishRide
                     setpickupLocation={setpickupLocation}
                     captainLocation={captainLocation}
