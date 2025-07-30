@@ -78,10 +78,10 @@ const ConfirmRidePopup = (props: ConfirmRidePopupPanelProps) => {
     }
 
     return (
-        <div className='h-screen w-screen flex flex-col'>
+        <div className='h-screen w-screen flex flex-col text-[#1D2A44]'>
             {/* Header */}
             <div className="px-3 py-2 flex justify-between items-center text-2xl font-semibold relative">
-                <h5 className='p-1 text-gray-300 absolute left-4' onClick={() => props.setConfirmRidePopupPanel(false)}>
+                <h5 className='p-1 text-[#0e1f41] absolute left-4' onClick={() => props.setConfirmRidePopupPanel(false)}>
                     <i className="ri-arrow-down-wide-line"></i>
                 </h5>
                 <h3 className="text-xl font-bold mx-auto">Confirm Your Ride</h3>

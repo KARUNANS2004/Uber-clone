@@ -23,8 +23,10 @@ interface confirmRidePanelProps {
 const ConfirmedRide = (props: confirmRidePanelProps) => {
     const [cashButtonClicked, setCashButtonClicked] = useState(false)
     const [onlinePaymentButtonClicked, setonlinePaymentButtonClicked] = useState(false)
+    console.log(cashButtonClicked)
+    console.log(onlinePaymentButtonClicked)
     return (
-        <div >
+        <div className='text-[#1D2A44]' >
             <div className="px-3 flex justify-between text-2xl font-semibold">
                 <h3 className="text-xl font-bold mb-3">Confirm Your Ride</h3>
                 <i
@@ -32,7 +34,7 @@ const ConfirmedRide = (props: confirmRidePanelProps) => {
                         props.setconfirmRidePanel(false);
                         props.setVehiclePanel(false);
                     }}
-                    className="ri-arrow-down-wide-line text-gray-400 cursor-pointer pr-2 "
+                    className="ri-arrow-down-wide-line cursor-pointer pr-2 "
                 ></i>
             </div>
             <div className=' w-screen flex flex-col justify-between items-center px-2'>
@@ -40,13 +42,13 @@ const ConfirmedRide = (props: confirmRidePanelProps) => {
                     className='h-28'
                     src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png"
                 />
-                <div className='h-[1px] w-full bg-gray-200'></div>
+                <div className='h-[1px] w-full bg-[#D4932D]'></div>
                 <div className='w-full pl-3 flex-col'>
                     <div className='flex items-center pt-2'>
                         <h1 className='text-2xl mr-5'><i className="ri-map-pin-user-fill"></i></h1>
                         <div className='flex flex-col gap-2 justify-around w-full'>
                             <p className='font-medium'>{props.pickup}</p>
-                            <div className='h-[1px] w-full bg-gray-200'></div>
+                            <div className='h-[1px] w-full bg-[#D4932D]'></div>
                         </div>
 
                     </div>
@@ -54,7 +56,7 @@ const ConfirmedRide = (props: confirmRidePanelProps) => {
                         <h1 className='text-2xl mr-5'><i className="ri-map-pin-2-fill"></i></h1>
                         <div className='flex flex-col gap-2 w-full'>
                             <p className='font-medium'>{props.destination}</p>
-                            <div className='h-[1px] w-full bg-gray-200'></div>
+                            <div className='h-[1px] w-full bg-[#D4932D]'></div>
                         </div>
                     </div>
                     <div className='flex pb-4 pt-2'>
@@ -71,7 +73,7 @@ const ConfirmedRide = (props: confirmRidePanelProps) => {
                                         props.setconfirmRidePanel(false)
                                         props.createRide()
                                     }}
-                                    className={`font-semibold w-full border py-5 flex items-center justify-start pl-3 rounded-xl transition-all duration-300 ease-in-out ${onlinePaymentButtonClicked ? "border-[1px] border-blue-500 bg-gray-50 " : "border"}`}>
+                                    className={`font-semibold w-full border py-5 flex items-center justify-start pl-3 rounded-xl transition-all cursor-pointer hover:bg-[#f7af34] duration-300 ease-in-out border-[#D4932D] bg-[#F7BD58] `}>
                                     <p>Pay Now</p>
                                     <div className='ml-5 flex gap-2'>
                                         <img src={UPI_Logo} alt="upi" className='h-[20px]' />
@@ -88,7 +90,7 @@ const ConfirmedRide = (props: confirmRidePanelProps) => {
                                         props.setconfirmRidePanel(false)
                                         props.setPaymentMethod("cash")
                                     }}
-                                    className={`font-semibold w-full border py-5 flex items-center justify-start pl-3 rounded-xl transition-all duration-300 ease-in-out ${cashButtonClicked ? "border-[1px] border-blue-500 bg-gray-50 " : "border"}`}>
+                                    className={`font-semibold w-full border py-5 flex items-center justify-start pl-3 rounded-xl transition-all cursor-pointer hover:bg-[#f7af34] duration-300 ease-in-out "border-[1px] border-[#D4932D] bg-[#F7BD58]`}>
                                     <p>Pay with Cash</p>
                                     <div className='ml-5 flex gap-2'>
                                         <img src={cash} alt="cash" className='h-[20px]' />
@@ -98,11 +100,11 @@ const ConfirmedRide = (props: confirmRidePanelProps) => {
                         </div>
                     </div>
                 </div>
-                <button onClick={() => {
+                {/* <button onClick={() => {
                     props.setlookingForDriverPanel(true);
                     props.setconfirmRidePanel(false);
                     props.createRide()
-                }} className='w-full bg-green-500 hover:bg-green-600 active:bg-green-600 text-white font-semibold p-2 rounded-lg'>Confirm</button>
+                }} className='w-full bg-green-500 hover:bg-green-600 active:bg-green-600 text-white font-semibold p-2 rounded-lg'>Confirm</button> */}
             </div>
 
         </div >

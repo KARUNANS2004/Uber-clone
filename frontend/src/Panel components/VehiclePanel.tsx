@@ -74,7 +74,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between text-2xl font-semibold">
-        <h3 className="text-xl font-bold mb-3">Choose your Ride</h3>
+        <h3 className="text-xl text-[#1D2A44] font-bold mb-3">Choose your Ride</h3>
         <i
           onClick={() => {
             props.setVehiclePanel(false);
@@ -88,7 +88,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
         props.setconfirmRidePanel(true)
         props.setVehiclePanel(false)
         props.setVehicleType("car")
-      }} className="flex active:border-2 active:border-black bg-gray-100 shadow-inner shadow-gray-200 max-h-20 rounded-xl p-3 items-center justify-between">
+      }} className="flex border text-[#1D2A44] border-[#D4932D] active:border-2 active:border-[#f7af34] bg-[#F7BD58] hover:bg-[#f7af34] transition duration-300 cursor-pointer max-h-20 rounded-xl p-3 items-center justify-between">
         <img
           className="h-12"
           src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png"
@@ -96,7 +96,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
         />
         <div className="w-1/2">
           <h4 className="font-medium text-sm">
-            UberGo{" "}
+            Nivaara{" "}
             <span>
               <i className="ri-user-fill"></i>4
             </span>
@@ -112,7 +112,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
         props.setconfirmRidePanel(true)
         props.setVehiclePanel(false)
         props.setVehicleType("motorcycle")
-      }} className="flex active:border-2 active:border-black bg-gray-100 shadow-inner shadow-gray-200 max-h-20 rounded-xl p-3 items-center justify-between">
+      }} className="flex text-[#1D2A44] border border-[#D4932D] active:border-2 active:border-[#f7af34] bg-[#F7BD58] hover:bg-[#f7af34] transition duration-300 cursor-pointer max-h-20 rounded-xl p-3 items-center justify-between">
         <img
           className="h-12"
           src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1649231091/assets/2c/7fa194-c954-49b2-9c6d-a3b8601370f5/original/Uber_Moto_Orange_312x208_pixels_Mobile.png"
@@ -120,7 +120,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
         />
         <div className=" ml-2 w-1/2">
           <h4 className="font-medium text-sm">
-            Moto{" "}
+            Tez Ride{" "}
             <span>
               <i className="ri-user-fill"></i>1
             </span>
@@ -136,7 +136,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
         props.setconfirmRidePanel(true)
         props.setVehiclePanel(false)
         props.setVehicleType("auto")
-      }} className="flex active:border-2 active:border-black bg-gray-100 shadow-inner shadow-gray-200 max-h-20 rounded-xl p-3 items-center justify-between">
+      }} className="flex text-[#1D2A44] border border-[#D4932D] active:border-2 active:border-[#f7af34] bg-[#F7BD58] hover:bg-[#f7af34] transition duration-300 cursor-pointer max-h-20 rounded-xl p-3 items-center justify-between">
         <img
           className="h-12"
           src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648431773/assets/1d/db8c56-0204-4ce4-81ce-56a11a07fe98/original/Uber_Auto_558x372_pixels_Desktop.png"
@@ -144,7 +144,7 @@ const VehiclePanel = (props: VehiclePanelProps) => {
         />
         <div className=" ml-2 w-1/2">
           <h4 className="font-medium text-sm">
-            Uber Auto{" "}
+            Auto Chalak{" "}
             <span>
               <i className="ri-user-fill"></i>3
             </span>

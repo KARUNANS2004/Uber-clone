@@ -52,7 +52,7 @@ const WaitingForDriverComponent = (props: WaitingForDriverComponentProps) => {
     )
   }
   return (
-    <div className='flex flex-col' >
+    <div className='flex flex-col text-[#1D2A44]' >
       <div className="px-3 flex flex-row-reverse justify-between text-2xl font-semibold">
         <i className="ri-arrow-down-wide-line text-gray-400 cursor-pointer pr-2 " ></i>
       </div>
