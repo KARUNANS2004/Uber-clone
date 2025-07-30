@@ -37,38 +37,38 @@ const CaptainLogin = () => {
   };
 
   return (
-    <div className='p-7 h-screen flex flex-col justify-between'>
+    <div className='p-7 h-screen flex flex-col justify-between bg-[#F2C883] text-[#1D2A44]'>
       <div>
         <img
-          className='w-20 mb-3'
-          src='https://www.svgrepo.com/show/505031/uber-driver.svg'
+          className='w-20 mb-3 scale-[1.5]'
+          src='\saarthi_pages_logo.png'
           alt='Captain Logo'
         />
 
         <form onSubmit={submitHandler}>
-          <h3 className='text-lg font-medium mb-2'>What's your email</h3>
+          <h3 className='text-xl font-bold mb-2'>What's your email</h3>
           <input
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
+            className="bg-[#F7BD58] mb-7 rounded-md px-4 py-2 border border-[#D4932D] w-full text-[#1D2A44] text-lg placeholder:text-[#1D2A44] placeholder:text-base focus:outline-none focus:ring-2 focus:ring-[#D4932D]"
             type='email'
             placeholder='email@example.com'
           />
 
-          <h3 className='text-lg font-medium mb-2'>Enter Password</h3>
+          <h3 className='text-xl font-bold mb-2'>Enter Password</h3>
           <input
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
+            className="bg-[#F7BD58] mb-7 rounded-md px-4 py-2 border border-[#D4932D] w-full text-[#1D2A44] text-lg placeholder:text-[#1D2A44] placeholder:text-base focus:outline-none focus:ring-2 focus:ring-[#D4932D]"
             type='password'
-            placeholder='password'
+            placeholder='Password'
           />
 
           <button
             type='submit'
-            className='bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg'
+            className='bg-[#6B4226] hover:bg-[#5b3217]  text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg'
           >
             Login
           </button>
@@ -76,7 +76,7 @@ const CaptainLogin = () => {
 
         <p className='text-center'>
           Join a fleet?{' '}
-          <Link to='/captain-signup' className='text-blue-600'>
+          <Link to='/captain-signup' className='text-blue-600 underline'>
             Register as a Captain
           </Link>
         </p>
@@ -85,7 +85,7 @@ const CaptainLogin = () => {
       <div>
         <Link
           to='/login'
-          className='bg-[#d5622d] flex items-center justify-center text-white font-semibold mb-5 rounded-lg px-4 py-2 w-full text-lg'
+          className='bg-[#1D2A44] hover:bg-[#162033] flex items-center justify-center text-white font-semibold mb-5 rounded-lg px-4 py-2 w-full text-lg'
         >
           Sign in as User
         </Link>

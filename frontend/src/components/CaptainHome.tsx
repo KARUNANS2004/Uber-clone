@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CaptainDetails from '../Panel components/CaptainDetails';
 import RidePopup from '../Panel components/RidePopup';
@@ -27,7 +27,12 @@ interface rideData {
   _id: string
 }
 
-const CaptainHome = () => {
+interface CaptainProps {
+  paymentMethod: 'cash' | 'online' | null
+  setPaymentMethod: React.Dispatch<React.SetStateAction<'cash' | 'online' | null>>
+}
+
+const CaptainHome = (props: CaptainProps) => {
   const [ridePopupPanel, setRidePopupPanel] = useState(false);
   const [confirmRidePopupPanel, setConfirmRidePopupPanel] = useState(false);
   const ridePopupPanelRef = useRef(null);
@@ -99,23 +104,44 @@ const CaptainHome = () => {
 
   // GSAP animations for ride popup
   useGSAP(() => {
-    gsap.to(ridePopupPanelRef.current, {
-      transform: ridePopupPanel ? 'translateY(0)' : 'translateY(100%)',
-    });
+    if (ridePopupPanel) {
+      gsap.to(ridePopupPanelRef.current, {
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out"
+      });
+    } else {
+      gsap.to(ridePopupPanelRef.current, {
+        y: "100%",
+        duration: 0.4,
+        ease: "power2.in"
+      });
+    }
   }, [ridePopupPanel]);
+
 
   // GSAP animations for confirm ride popup
   useGSAP(() => {
-    gsap.to(confirmRidePopupPanelRef.current, {
-      transform: confirmRidePopupPanel ? 'translateY(0)' : 'translateY(100%)',
-    });
+    if (confirmRidePopupPanel) {
+      gsap.to(confirmRidePopupPanelRef.current, {
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out"
+      });
+    } else {
+      gsap.to(confirmRidePopupPanelRef.current, {
+        y: "100%",
+        duration: 0.4,
+        ease: "power2.in"
+      });
+    }
   }, [confirmRidePopupPanel]);
 
   return (
-    <div className='h-screen w-screen'>
+    <div className='h-screen w-screen text-[#1D2A44]'>
       <div className='fixed p-3 top-0 flex items-center justify-between w-full z-20'>
-        <img className='w-16 scale-[1.5]' src="\saarthi_pages_logo.png" alt="Uber Logo" />
-        <Link to={'/captain-login'} className='h-10 w-10 bg-white rounded-full flex items-center justify-center'>
+        <img className='w-16 scale-[1.5]' src="\saarthi_pages_logo.png" alt="Saarthi Logo" />
+        <Link to={'/captain-login'} className='h-10 w-10 bg-[#F2C883] border border-[#D4932D] rounded-full flex items-center justify-center'>
           <i className="ri-logout-box-r-line"></i>
         </Link>
       </div>
@@ -128,17 +154,19 @@ const CaptainHome = () => {
         />
       </div>
 
-      <div className='h-2/5 p-4'>
+      <div className='h-2/5 p-4 bg-[#F2C883]'>
         <CaptainDetails />
       </div>
 
-      <div ref={ridePopupPanelRef} className='fixed translate-y-full w-full bottom-0 z-10 bg-white py-5 rounded-lg'>
+      <div ref={ridePopupPanelRef} className='fixed translate-y-full w-full bottom-0 z-10 bg-[#F2C883] py-5 rounded-lg'>
         <RidePopup
           captainLocation={captainLocation}
           ride={ride}
           setridePopupPanel={setRidePopupPanel}
           setConfirmRidePopupPanel={setConfirmRidePopupPanel}
           confirmRide={confirmRide}
+          paymentMethod={props.paymentMethod}
+          setPaymentMethod={props.setPaymentMethod}
         />
       </div>
 

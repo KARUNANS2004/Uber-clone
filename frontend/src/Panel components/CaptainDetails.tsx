@@ -3,6 +3,8 @@ import { useCaptainContext } from '../context/CaptainContext';
 import CaptainTotalTimeOnline from './CaptainTotalTimeOnline';
 import CaptainDistanceTracker from './CaptainDistanceTracker';
 
+
+
 const CaptainDetails = () => {
     const { captain } = useCaptainContext(); // clean hook usage
     const [captainFirstName, setCaptainFirstName] = useState('');
@@ -36,16 +38,11 @@ const CaptainDetails = () => {
     }; // ensures valid captain object
 
     return (
-        <div>
+        <div className=''>
             <div className='flex flex-wrap items-center justify-between'>
                 <div className='flex items-center justify-start gap-3'>
-                    <img
-                        className='h-16 w-16 rounded-full object-cover'
-                        src='https://live.staticflickr.com/5252/5403292396_0804de9bcf_b.jpg'
-                        alt='Captain'
-                    />
                     <h4 className='text-lg font-medium capitalize'>
-                        {captainFirstName + ' ' + captainLastName}
+                        Hello, {captainFirstName + ' ' + captainLastName}
                     </h4>
                 </div>
                 <div>
@@ -53,7 +50,7 @@ const CaptainDetails = () => {
                     <p className='text-sm font-medium text-gray-600'>Earned</p>
                 </div>
             </div>
-            <div className='flex p-3 mt-6 bg-gray-100 rounded-xl justify-center gap-4 items-start'>
+            <div className='flex p-3 mt-6 bg-[#F7BD58] border border-[#D4932D] rounded-xl justify-center gap-4 items-start'>
                 <div className='text-center'>
                     <i className='text-3xl mb-2 font-extralight ri-timer-2-line'></i>
                     <h5 className='text-lg font-medium'><CaptainTotalTimeOnline /></h5>

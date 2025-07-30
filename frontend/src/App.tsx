@@ -11,8 +11,11 @@ import CaptainHome from './components/CaptainHome'
 import CaptainProtectWrapper from './components/CaptainProtectWrapper'
 import Riding from './components/Riding'
 import CaptainRiding from './Panel components/CaptainRiding'
+import { useState } from 'react'
 
 const App = () => {
+  const [paymentMethod, setPaymentMethod] = useState<"cash" | "online" | null>(null)
+
   return (
     <div className='max-h-screen'>
       <Routes>
@@ -24,11 +27,11 @@ const App = () => {
         <Route path='/captain-login' element={<CaptainLogin />}></Route>
         <Route path='/captain-signup' element={<CaptainSignup />} />
         <Route path='/home' element={<UserProtectWrapper>
-          <Home />
+          <Home paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
         </UserProtectWrapper>} />
         <Route path='/captain-home' element={
           <CaptainProtectWrapper>
-            <CaptainHome />
+            <CaptainHome paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
           </CaptainProtectWrapper>
         } />
         <Route path='/users/logout' element={

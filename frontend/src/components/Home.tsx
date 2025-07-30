@@ -51,7 +51,12 @@ interface rideStructure {
   _id: string
 }
 
-const Home = () => {
+interface HomeProps {
+  paymentMethod: "cash" | "online" | null
+  setPaymentMethod: React.Dispatch<React.SetStateAction<'cash' | 'online' | null>>
+}
+
+const Home = (props: HomeProps) => {
   const [pickup, setPickup] = useState('')
   const [destination, setDestination] = useState('')
   const [panelOpen, setPanelOpen] = useState(false)
@@ -68,7 +73,7 @@ const Home = () => {
   const [vehicleType, setVehicleType] = useState<"auto" | "car" | "motorcycle">("auto")
   const [ride, setRide] = useState<rideStructure | null>(null)
 
-  const [paymentMethod, setPaymentMethod] = useState<"cash" | "online" | null>(null)
+  // const [paymentMethod, setPaymentMethod] = useState<"cash" | "online" | null>(null)
 
   const navigate = useNavigate()
 
@@ -258,6 +263,7 @@ const Home = () => {
     console.log(res)
   }
 
+  console.log(props.paymentMethod)
   return (
     <div className='relative h-screen overflow-hidden'>
       <img className='w-12 absolute left-5 top-5' src="\saarthi_pages_logo.png" />
@@ -348,7 +354,7 @@ const Home = () => {
           setconfirmRidePanel={setconfirmRidePanel}
           setVehiclePanel={setVehiclePanel}
           setlookingForDriverPanel={setlookingForDriverPanel}
-          setPaymentMethod={setPaymentMethod} />
+          setPaymentMethod={props.setPaymentMethod} />
       </div>
       <div ref={lookingForDriverPanelRef} className='fixed translate-y-full w-full bottom-0 z-10 bg-[#F2C883] py-10 pt-12'>
         <LookingForDriver
@@ -357,7 +363,7 @@ const Home = () => {
           fare={fare}
           vehicleType={vehicleType}
           setlookingForDriverPanel={setlookingForDriverPanel}
-          paymentMethod={paymentMethod} />
+          paymentMethod={props.paymentMethod} />
       </div>
       <div ref={WaitingForDriverRef} className="fixed w-full bottom-0 z-10 bg-[#F2C883] pb-2 p-4">
         <WaitingForDriverComponent

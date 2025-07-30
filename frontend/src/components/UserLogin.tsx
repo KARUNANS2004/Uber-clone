@@ -47,7 +47,7 @@ const UserLogin = () => {
   return (
     <div className='h-screen p-7 flex flex-col justify-between bg-[#F2C883]'>
       <div>
-        <img className='w-16 mb-10 scale-[1.5]' src="\saarthi_pages_logo.png" alt="" />
+        <img className='w-20 mb-3 scale-[1.5]' src="\saarthi_pages_logo.png" alt="" />
         <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => { submitHandler(e) }}>
           {/*Also try to make a login via the phone number */}
           <h3 className='text-xl font-bold mb-2 text-[#1D2A44]'>What's your email</h3>
@@ -64,9 +64,9 @@ const UserLogin = () => {
             type="password"
             value={password}
             onChange={(e) => { setPassword(e.target.value) }}
-            className='bg-[#F7BD58] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base '
+            className="bg-[#F7BD58] mb-7 rounded-md px-4 py-2 border border-[#D4932D] w-full text-[#1D2A44] text-lg placeholder:text-[#1D2A44] placeholder:text-base focus:outline-none focus:ring-2 focus:ring-[#D4932D]"
             required
-            placeholder='password'
+            placeholder='Password'
           />
           <button className=' bg-[#1D2A44] hover:bg-[#162033] text-white font-semibold mb-7 rounded-[8px] px-4 py-2 w-full text-lg placeholder:text-base transition duration-300'
           >Login</button>
