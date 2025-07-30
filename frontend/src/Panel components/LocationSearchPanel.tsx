@@ -30,13 +30,13 @@ const LocationSearchPanel = (props: VehiclePanelProps) => {
           <div
             key={index}
             onClick={() => handleSuggestionClick(element)}
-            className='flex cursor-pointer gap-4 border-2 p-3 border-gray-50 active:border-black rounded-xl items-center my-2 justify-start'
+            className='flex cursor-pointer gap-4 border-2 p-3 border-[#D4932D] bg-[#F7BD58] active:border-black rounded-xl items-center my-2 justify-start hover:bg-[#f7af34] transition duration-300'
           >
-            <h2 className='bg-[#eee] min-w-[40px] h-10 w-10 flex items-center justify-center rounded-full text-xl text-gray-700'>
+            <h2 className='bg-[#D4932D] min-w-[40px] h-10 w-10 flex items-center justify-center rounded-full text-xl text-[#1D2A44]'>
               <i className="ri-map-pin-fill"></i>
             </h2>
 
-            <h4 className='font-medium'>{element}</h4>
+            <h4 className='font-medium text-[#1D2A44]'>{element}</h4>
           </div>
         ))
       }

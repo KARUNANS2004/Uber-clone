@@ -185,24 +185,30 @@ const Home = () => {
   useGSAP(() => {
     if (confirmRidePanel) {
       gsap.to(confirmRidePanelRef.current, {
-        transform: 'translateY(0)'
-      })
+        y: 0,
+        duration: 0.3,
+        ease: 'power2.out',
+      });
     } else {
       gsap.to(confirmRidePanelRef.current, {
-        transform: 'translateY(100%)'
-      })
+        y: '100%',
+        duration: 0.3,
+        ease: 'power2.in',
+      });
     }
-  }, [confirmRidePanel])
+  }, [confirmRidePanel]);
 
   // looking for driver ref
   useGSAP(() => {
     if (lookingForDriverPanel) {
+      gsap.set(lookingForDriverPanelRef.current, { clearProps: 'transform' }) // clear transform before animating
       gsap.to(lookingForDriverPanelRef.current, {
-        transform: 'translateY(0)'
+        y: 0, // use 'y' instead of 'transform'
       })
     } else {
+      gsap.set(lookingForDriverPanelRef.current, { clearProps: 'transform' })
       gsap.to(lookingForDriverPanelRef.current, {
-        transform: 'translateY(100%)'
+        y: '100%',
       })
     }
   }, [lookingForDriverPanel])
@@ -268,43 +274,46 @@ const Home = () => {
           <form onSubmit={(e) => {
             submitHandler(e)
           }}>
-            <div className='flex flex-col top-[46.5%] absolute items-center gap-1 left-9'>
-              <div className="base-circle h-3 w-3 bg-[#1D2A44] rounded-full flex justify-center items-center">
+            <div className='relative'>
+              <input
+                onClick={() => {
+                  setPanelOpen(true)
+                  setActiveField("pickup")
+                }}
+                value={pickup}
+                onChange={(e) => {
+                  handlePickupChange(e)
+                }}
+                type="text"
+                className='bg-[#F7BD58] border border-[#D4932D] text-[#1D2A44] px-12 py-2 text-lg rounded-lg w-full mt-5 focus:outline-none focus:ring-[#D4932D] placeholder:text-[#1D2A44]'
+                placeholder='Add a pick-up location'
+              />
+              <div className="base-circle h-3 w-3 bg-[#1D2A44] rounded-full absolute top-[50%] translate-y-1/2 left-[15px] flex justify-center items-center">
                 <div className='inner-circle h-1 w-1 bg-white rounded-full'></div>
               </div>
-              <div className="line bg-[#1D2A44] w-0.5 h-9 "></div>
-              <div className="square bg-[#1D2A44] h-3 w-3 flex justify-center items-center">
+              <div className="line bg-[#1D2A44] w-0.5 h-[10px] absolute bottom-[0%] left-[20px]"></div>
+            </div>
+            <div className='relative'>
+              <div className="line bg-[#1D2A44] w-0.5 h-7 absolute left-[20px] "></div>
+              <input
+                onClick={() => {
+                  setPanelOpen(true)
+                  setActiveField("destination")
+                }}
+                value={destination}
+                onChange={(e) => {
+                  handleDestinationChange(e)
+                }}
+                type="text"
+                className='bg-[#F7BD58] border border-[#D4932D] text-[#1D2A44] px-12 py-2 text-lg rounded-lg w-full mt-3 focus:outline-none focus:ring-[#D4932D] placeholder:text-[#1D2A44]'
+                placeholder='Enter your destination'
+              />
+              <div className="square bg-[#1D2A44] h-3 w-3 flex absolute top-[50%] translate-y-1/2 left-[15px] justify-center items-center">
                 <div className='inner-square h-1 w-1 bg-white'></div>
               </div>
             </div>
-            <input
-              onClick={() => {
-                setPanelOpen(true)
-                setActiveField("pickup")
-              }}
-              value={pickup}
-              onChange={(e) => {
-                handlePickupChange(e)
-              }}
-              type="text"
-              className='bg-[#F7BD58] border border-[#D4932D] text-[#1D2A44] px-12 py-2 text-lg rounded-lg w-full mt-5 focus:outline-none focus:ring-[#D4932D] placeholder:text-[#1D2A44]'
-              placeholder='Add a pick-up location'
-            />
-            <input
-              onClick={() => {
-                setPanelOpen(true)
-                setActiveField("destination")
-              }}
-              value={destination}
-              onChange={(e) => {
-                handleDestinationChange(e)
-              }}
-              type="text"
-              className='bg-[#F7BD58] border border-[#D4932D] text-[#1D2A44] px-12 py-2 text-lg rounded-lg w-full mt-3 focus:outline-none focus:ring-[#D4932D] placeholder:text-[#1D2A44]'
-              placeholder='Enter your destination'
-            />
           </form>
-          <button className='bg-[#1D2A44] font-bold text-white px-4 py-2 rounded-[8px] mt-3 w-full '
+          <button className='bg-[#1D2A44] hover:bg-[#162033] transition duration-300 font-bold text-white px-4 py-2 rounded-[8px] mt-3 w-full '
             onClick={findTrip}>
             Find a Trip
           </button>
